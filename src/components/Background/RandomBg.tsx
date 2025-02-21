@@ -68,9 +68,9 @@ export function RandomBg() {
     const randomGradient = `radial-gradient(circle at top right, ${randomColor.zero} 0%, ${randomColor.eighteen} 18%, ${randomColor.thirtyTwo} 32%, ${randomColor.fiftyTwo} 52%, ${randomColor.sixtyEight} 68%, ${randomColor.eightySeven} 87%, ${randomColor.hundred} 100%)`;
 
     return (
-        <div className="z-[-1] fixed top-0 left-0 right-0 bottom-0">
+        <div className="z-[-1] fixed top-0 left-0 right-0 bottom-0 bg-zinc-900">
             <div 
-                className="w-full h-full bg-zinc-900" 
+                className="w-full h-full" 
                 style={{ opacity: 0.1, backgroundImage: randomGradient }}
             />
         </div>
