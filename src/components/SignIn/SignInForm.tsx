@@ -1,7 +1,5 @@
 'use client'
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+
 import { useState } from "react";
 import { Mail, SmartphoneIcon } from "lucide-react";
 import axios from "axios";
@@ -19,6 +17,9 @@ const SignInSchema = z.object({
   
 import { useRouter } from "next/router";
 
+import OtpLogin from "./OtpLogin";
+
+  
 export function SignInForm() {
     const {
         register,
@@ -118,5 +119,6 @@ export function SignInForm() {
                 )}
                 </div>
             </div>
+        <OtpLogin method={method} setMethod={setMethod} />
     )
 }
