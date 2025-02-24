@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useState } from "react";
 import { Mail, SmartphoneIcon } from "lucide-react";
+import axios from "axios";
 
 const SignInSchema = z.object({
     email: z.string().email({
@@ -11,11 +12,13 @@ const SignInSchema = z.object({
     }),
     phone: z.string().min(10, {
       message: "Por favor, insira um número de telefone válido.",
-    }),
+    }).optional(),
   });
   
   type SignInData = z.infer<typeof SignInSchema>;
   
+import { useRouter } from "next/router";
+
 export function SignInForm() {
     const {
         register,
@@ -26,17 +29,34 @@ export function SignInForm() {
         resolver: zodResolver(SignInSchema),
       });
     
-      const onSubmit = (data: SignInData) => {
+      const router = useRouter();
+
+      const onSubmit = async (data: SignInData) => {
         console.log(data);
-      };
+        const resp = await axios.post("/api/user", data)
+            .then((res) => {
+                const respData = res.data;
+                if(respData.status !== 200) {
+                    return console.log(respData.message);
+                } 
+
+                localStorage.setItem("userId", respData.user.id);
+                localStorage.setItem("email", respData.user.email);
+
+                router.push('/verifyAccount')
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
     
       const [method, setMethod] = useState<"email" | "phone">("email");
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-2">
+        <div className="mt-2">
                 <div className="flex flex-col gap-2">
                 {method === "email" ? (
-                    <>
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
                     <div className="flex flex-row justify-between">
                         <label
                         htmlFor="email"
@@ -61,10 +81,10 @@ export function SignInForm() {
                     {errors.email && (
                         <p className="text-red-500 text-xs">{errors.email.message}</p>
                     )}
-                    <button className="mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium">
+                    <button type="submit" className="mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium">
                         Continuar com Email
                     </button>
-                    </>
+                    </form>
                 ) : (
                     <>
                     <div className="flex flex-row justify-between">
@@ -97,6 +117,6 @@ export function SignInForm() {
                     </>
                 )}
                 </div>
-            </form>
+            </div>
     )
 }
