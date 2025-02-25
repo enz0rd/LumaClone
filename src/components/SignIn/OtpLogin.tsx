@@ -31,7 +31,7 @@ function OtpLogin() {
     resolver: zodResolver(OtpLoginSchema),
   });
 
-  const [resendCountdown, setResendCountdown] = useState(0);
+  const [resendCountdown, setResendCountdown] = useState(60);
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -50,11 +50,13 @@ function OtpLogin() {
           userId: localStorage.getItem("userId"),
           email: localStorage.getItem("email"),
         });
-        console.log(getToken);
         const token = getToken.data.token;
         localStorage.setItem("token", token);
         localStorage.removeItem("userId");
         localStorage.removeItem("email");
+        if(resp.data.hasUsername == null) {
+          return router.push('/finish-signup');
+        }
         router.push("/create");
       } else {
         setIsLoading(false);
@@ -106,7 +108,7 @@ function OtpLogin() {
     <div className="flex w-full h-[90vh] items-center">
       <div className="m-auto flex justify-center">
         <div className="border border-zinc-700 bg-zinc-900 bg-opacity-65 backdrop-blur-5 rounded-3xl">
-          <div className="p-6 flex flex-col gap-3 w-[20rem] text-left">
+          <div className="p-6 flex flex-col gap-3 w-[23rem] text-left">
             <div className="bg-zinc-800 rounded-full p-4 w-fit">
               <LockKeyholeIcon className="text-zinc-300 scale-x-[-1] h-8 w-8" />
             </div>
@@ -128,12 +130,12 @@ function OtpLogin() {
                   }
                   className="flex justify-center mx-auto w-full"
                 >
-                  <InputOTPGroup className="group text-zinc-50 w-full">
+                  <InputOTPGroup className="flex gap-3 group text-zinc-50 w-full">
                     {Array.from({ length: 6 }).map((_, index) => (
                       <InputOTPSlot
                         key={index}
                         index={index}
-                        className="w-[3rem] focus:text-zinc-50 border-zinc-50 h-[3rem]"
+                        className="w-[3rem] focus:text-zinc-50 rounded-lg border-[.075rem] border-zinc-400 h-[3rem]"
                       />
                     ))}
                   </InputOTPGroup>
@@ -147,27 +149,29 @@ function OtpLogin() {
                   <p className="text-red-500 text-sm mt-1">{errorResponse}</p>
                 )}
               </div>
-              <Button
-                type="submit"
-                className="bg-zinc-50 mt-3 text-zinc-800 hover:bg-zinc-300"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2Icon className="animate-spin h-5 w-5" />
-                  </>
-                ) : (
-                  <>Enviar</>
-                  )}
-              </Button>
-              <Button
-                type="button"
-                disabled={resendCountdown > 0}
-                onClick={requestOtp}
-                className="bg-zinc-800 border border-zinc-400 text-zinc-400 hover:bg-zinc-300"
-              >
-                Reenviar {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
-              </Button>
+              <div className="flex flex-row mt-2 justify-between items-center">
+                <Button
+                  type="submit"
+                  className="bg-zinc-50 text-zinc-800 hover:bg-zinc-300"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2Icon className="animate-spin h-5 w-5" />
+                    </>
+                  ) : (
+                    <>Enviar</>
+                    )}
+                </Button>
+                <Button
+                  type="button"
+                  disabled={resendCountdown > 0}
+                  onClick={requestOtp}
+                  className="bg-transparent text-zinc-400"
+                >
+                  Reenviar {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
+                </Button>
+              </div>
             </form>
           </div>
         </div>

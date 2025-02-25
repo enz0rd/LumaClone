@@ -37,5 +37,14 @@ export async function POST(req: Request) {
         },
     })
 
-    return NextResponse.json({ status: 200, message: "OTP code verified" });
+    const hasUsername = await db.user.findUnique({
+        where: {
+            id: Number(body.userId),
+        },
+        select: {
+            username: true,
+        },
+    });
+
+    return NextResponse.json({ status: 200, hasUsername: hasUsername?.username, message: "OTP code verified" });
 }

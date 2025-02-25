@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, SmartphoneIcon } from "lucide-react";
 import axios from "axios";
 
@@ -32,10 +32,32 @@ export function SignInForm() {
   } = useForm<SignInData>({
     resolver: zodResolver(SignInSchema),
   });
-
-  document.title = "Entrar ∙ Luma";
-
+  
   const router = useRouter();
+  
+  const [isTokenVerified, setTokenVerified] = useState(false);
+  useEffect(() => {
+    if(!isTokenVerified) {
+      const verifyToken = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          return;
+        }
+        const resp = await axios.post("/api/auth/validate-token", { }, {
+          headers: {
+            'Authorization': `${token}`,
+          }
+        });
+        if (resp.data.status === 200) {
+          router.push("/create");
+        } else {
+          setTokenVerified(true);
+        }
+      }
+      verifyToken();
+    }
+  }, [isTokenVerified])
+  
   const onSubmit = async (data: SignInData) => {
     const resp = await axios.post("/api/user", data);
     const respData = resp.data;
@@ -43,6 +65,13 @@ export function SignInForm() {
       if (respData.slug == "not-verified") {
         localStorage.setItem("userId", respData.user.id);
         localStorage.setItem("email", respData.user.email);
+        const sendCode = await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }
+        );
         router.push("/verifyAccount");
         return;
       } else if (respData.slug == "server-error") {

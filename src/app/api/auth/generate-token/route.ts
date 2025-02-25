@@ -1,5 +1,6 @@
-import { SignJWT } from "jose";
+import { jwtDecrypt, SignJWT } from "jose";
 import { NextResponse } from "next/server";
+import jose from "jose"
 
 export async function POST(req: Request) {
     const body = await req.json();
@@ -22,5 +23,17 @@ export async function POST(req: Request) {
     } catch (error) {
         console.error(error);
         return NextResponse.json({ status: 500, slug: "server-error", message: "Internal server error" });
+    }
+}
+
+export async function DecryptToken(token: string) {
+    try {
+        console.log("teste ")
+        const { payload } = await jwtDecrypt(token, new TextEncoder().encode(process.env.JWT_SECRET));
+        console.log("teste 2")
+        return payload;
+    } catch (error) {
+        console.error('Decryption error:', error);
+        throw new Error('Invalid token');
     }
 }
