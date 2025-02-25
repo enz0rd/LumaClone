@@ -16,8 +16,9 @@ const SignInSchema = z.object({
   type SignInData = z.infer<typeof SignInSchema>;
   
 import { useRouter } from "next/router";
-
-import OtpLogin from "./OtpLogin";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
   
 export function SignInForm() {
@@ -119,6 +120,5 @@ export function SignInForm() {
                 )}
                 </div>
             </div>
-        <OtpLogin method={method} setMethod={setMethod} />
     )
 }
