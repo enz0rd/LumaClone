@@ -8,14 +8,14 @@ export function Footer() {
     return (
         <footer className="mx-auto fixed-bottom flex flex-col mt-10 border-t-[.075rem] border-zinc-800 w-[90%] max-w-[1280px] py-4">
             <div className="flex justify-between"> 
-                <div className="flex flex-row gap-5 flex-wrap items-center text-sm">
+                <div className="flex flex-row gap-5 flex-wrap items-center text-sm text-zinc-200">
                     <img src="/Luma/wordmark-light.png" alt="Luma logo" className="opacity-[75%] lg:w-[3.5rem] lg:h-[1.3rem] md:w-[3.5rem] md:h-[1.3rem] w-[2rem] h-[.75rem]" />
                     <Link href='/releases'>Novidades</Link>
                     <Link href='/discover'>Descobrir</Link>
                     <Link href='/pricing'>Preços</Link>
                     <Link href='/help'>Ajuda</Link>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 text-zinc-50">
                     <Link href={'mailto:support@lu.ma'}>
                         <LuMail size={15} />
                     </Link>

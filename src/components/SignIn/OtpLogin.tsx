@@ -1,280 +1,177 @@
 "use client";
-import { auth } from "@/app/api/auth/firebase";
-import {
-  ConfirmationResult,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  signInWithEmailLink,
-  isSignInWithEmailLink,
-  sendSignInLinkToEmail,
-} from "firebase/auth";
-import React, { FormEvent, useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
-interface OtpLoginProps {
-  method: "email" | "phone";
-  setMethod: (method: "email" | "phone") => void;
-}
-import { set, useForm } from "react-hook-form";
+import { Loader2Icon, LockKeyholeIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import z from "zod";
-import { Mail, SmartphoneIcon } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
 
-const SignInSchema = z.object({
-  email: z.string().email({
-    message: "Por favor, insira um email válido.",
+const OtpLoginSchema = z.object({
+  otp: z.string().length(6, {
+    message: "Por favor, insira um código OTP válido.",
   }),
-  //   phone: z.string().regex(/^\+\d{1,3}\s?\d{10,14}$/, {
-  //     message:
-  //       "Por favor, insira um número de telefone válido com o código do país. (ex: +55)",
-  //   }).optional(),
 });
 
-type SignInData = z.infer<typeof SignInSchema>;
+type OtpLoginData = z.infer<typeof OtpLoginSchema>;
 
-const actionCodeSettings = {
-    url: "http://localhost:3000",
-    handleCodeInApp: true,
-}
-
-function OtpLogin({ method, setMethod }: OtpLoginProps) {
+function OtpLogin() {
   const {
     register,
     handleSubmit,
-    watch,
+    setValue,
     formState: { errors },
-  } = useForm<SignInData>({
-    resolver: zodResolver(SignInSchema),
+  } = useForm<OtpLoginData>({
+    resolver: zodResolver(OtpLoginSchema),
   });
 
-  const requestOtp = async (data: string, e?: FormEvent<HTMLFormElement>) => {
-    e?.preventDefault();
-    setResendCountdown(60);
-    startTransition(async () => {
-      setError(null);
-      if (!recaptchaVerifier)
-        return setError("RecaptchaVerifier not initialized");
-      try {
-        if (method === "email") {
-          await sendSignInLinkToEmail(auth, data, actionCodeSettings);
-          setConfirmationResult(null);
-          setSuccess("Link de acesso enviado com sucesso.");
-        } else {
-          return setError("Método de acesso via telefone desativado.");
-        }
-      } catch (error: any) {
-        console.log(error);
-        setResendCountdown(0);
+  const [resendCountdown, setResendCountdown] = useState(0);
+  const router = useRouter();
 
-        if (error.code === "auth/invalid-phone-number") {
-          setError(
-            "Número de telefone inválido. Por favor, insira um número de telefone válido."
-          );
-        } else if (error.code === "auth/too-many-requests") {
-          setError("Muitas tentativas. Por favor, tente novamente mais tarde.");
-        } else {
-          setError("Erro ao enviar o link de acesso. Por favor, tente novamente.");
-        }
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [errorResponse, setErrorResponse] = useState("");
+  const onSubmit = async (data: OtpLoginData) => {
+    try {
+      setErrorResponse("");
+      setIsLoading(true);
+      const resp = await axios.post("/api/auth/verify-otp", {
+        userId: localStorage.getItem("userId"),
+        code: data.otp,
+      });
+      if (resp.data.status === 200) {
+        const getToken = await axios.post("/api/auth/generate-token", {
+          userId: localStorage.getItem("userId"),
+          email: localStorage.getItem("email"),
+        });
+        console.log(getToken);
+        const token = getToken.data.token;
+        localStorage.setItem("token", token);
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        router.push("/create");
+      } else {
+        setIsLoading(false);
+        setErrorResponse(resp.data.message);
       }
-    });
-  };
-
-  const onSubmit = (data: SignInData) => {
-    if (method === "email") {
-      console.log("teste");
-      requestOtp(data.email);
-    } else {
-      return setError("Método de acesso via telefone desativado.");
+    } catch (error) {
+      setErrorResponse("Erro ao enviar código OTP.");
+      setIsLoading(false);
+      console.log(error);
     }
   };
 
-  const router = useRouter();
-  const [otp, setOtp] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState("");
-  const [resendCountdown, setResendCountdown] = useState(0);
+  const requestOtp = async () => {
+    setResendCountdown(60);
+    try {
+      // Request OTP
+      const data = {
+        email: localStorage.getItem("email"),
+        userId: localStorage.getItem("userId"),
+      };
 
-  const [recaptchaVerifier, setRecaptchaVerifier] =
-    useState<RecaptchaVerifier | null>(null);
+      if(!data.email || !data.userId) {
+        router.push("/signin");
+      }
 
-  const [confirmationResult, setConfirmationResult] =
-    useState<ConfirmationResult | null>(null);
-
-  const [isPending, startTransition] = useTransition();
+      const resp = await axios.post("/api/auth/send-otp", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+      setResendCountdown(0);
+    }
+  };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
     if (resendCountdown > 0) {
-      timer = setTimeout(() => setResendCountdown(resendCountdown - 1), 1000);
+      const timer = setTimeout(
+        () => setResendCountdown(resendCountdown - 1),
+        1000
+      );
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(timer);
   }, [resendCountdown]);
 
-  useEffect(() => {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      "recaptcha-container",
-      {
-        size: "invisible",
-      }
-    );
-    setRecaptchaVerifier(recaptchaVerifier);
-
-    return () => recaptchaVerifier.clear();
-  }, [auth]);
-
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-2 flex flex-col gap-2 w-[20rem]"
-      >
-        <div className="flex flex-col gap-2 w-[20rem]">
-          {method === "email" ? (
-            <>
-              {!confirmationResult && (
-                <>
-                  <div className="flex flex-row justify-between">
-                    <label
-                      htmlFor="email"
-                      className="hover:cursor-pointer hover:text-zinc-100 font-semibold text-sm text-zinc-300"
-                    >
-                      Email
-                    </label>
-                    <span
-                      className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm text-zinc-400 flex gap-1 items-center"
-                      onClick={() => setMethod("phone")}
-                    >
-                      <SmartphoneIcon size={15} /> Usar Telefone
-                    </span>
-                  </div>
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder="voce@email.com"
-                    className="placeholder-zinc-600 p-2 hover:border-zinc-200 transition bg-zinc-900 border-[.075rem] border-zinc-700 rounded-lg text-zinc-100"
-                    {...register("email")}
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-wrap text-xs">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </>
-              )}
-              {confirmationResult && (
+    <div className="flex w-full h-[90vh] items-center">
+      <div className="m-auto flex justify-center">
+        <div className="border border-zinc-700 bg-zinc-900 bg-opacity-65 backdrop-blur-5 rounded-3xl">
+          <div className="p-6 flex flex-col gap-3 w-[20rem] text-left">
+            <div className="bg-zinc-800 rounded-full p-4 w-fit">
+              <LockKeyholeIcon className="text-zinc-300 scale-x-[-1] h-8 w-8" />
+            </div>
+            <h1 className="text-2xl text-zinc-100 font-semibold">Código OTP</h1>
+            <p className="text-sm font-semibold text-zinc-400">
+              Por favor, insira o código OTP enviado ao email informado para
+              entrar.
+            </p>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-2"
+            >
+              <div className="mx-auto w-full">
                 <InputOTP
                   maxLength={6}
-                  value={otp}
-                  onChange={(value) => setOtp(value)}
+                  autoFocus
+                  onChange={(value) =>
+                    setValue("otp", value, { shouldValidate: true })
+                  }
+                  className="flex justify-center mx-auto w-full"
                 >
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                  </InputOTPGroup>
-                  <InputOTPSeparator />
-                  <InputOTPGroup>
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
+                  <InputOTPGroup className="group text-zinc-50 w-full">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <InputOTPSlot
+                        key={index}
+                        index={index}
+                        className="w-[3rem] focus:text-zinc-50 border-zinc-50 h-[3rem]"
+                      />
+                    ))}
                   </InputOTPGroup>
                 </InputOTP>
-              )}
-              <button
-                className="disabled:bg-zinc-600 mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium"
-                disabled={isPending || resendCountdown > 0}
-              >
-                {isPending
-                  ? "Enviando..."
-                  : resendCountdown > 0
-                  ? `Reenviar link em ${resendCountdown}s`
-                  : "Continuar com Email"}
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-row justify-between">
-                <label
-                  htmlFor="phone"
-                  className="hover:cursor-pointer hover:text-zinc-100 font-semibold text-sm text-zinc-300"
-                >
-                  Número de Telefone
-                </label>
-                <span
-                  className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm text-zinc-400 flex gap-1 items-center"
-                  onClick={() => setMethod("email")}
-                >
-                  <Mail size={15} /> Usar Email
-                </span>
+                {errors.otp && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.otp.message}
+                  </p>
+                )}
+                {errorResponse && (
+                  <p className="text-red-500 text-sm mt-1">{errorResponse}</p>
+                )}
               </div>
-              <input
-                type="phone"
-                id="tel"
-                placeholder="+55 11 96123 4567"
-                className="placeholder-zinc-600 p-2 hover:border-zinc-200 transition bg-zinc-900 border-[.075rem] border-zinc-700 rounded-lg text-zinc-100"
-              />
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button
-                    className="mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium"
-                    disabled={isPending || resendCountdown > 0}
-                  >
-                    Continuar com Telefone
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="z-[999] bg-zinc-900 px-5 w-[80%] rounded-xl text-zinc-50 border-zinc-600">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Método de acesso desativado
-                    </AlertDialogTitle>
-                  </AlertDialogHeader>
-                  <AlertDialogDescription className="text-zinc-400 font-medium">
-                    A forma de acesso via telefone está desativada devido aos
-                    custos do uso no método de autenticação Firebase. Por favor,
-                    utilize o email para acessar.
-                  </AlertDialogDescription>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel className="text-zinc-900">
-                      Voltar
-                    </AlertDialogCancel>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </>
-          )}
-          <div className="flex flex-row text-wrap justify-center">
-            {error && <p className="text-red-500 text-xs">{error}</p>}
-            {success && <p className="text-green-500 text-xs">{success}</p>}
+              <Button
+                type="submit"
+                className="bg-zinc-50 mt-3 text-zinc-800 hover:bg-zinc-300"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2Icon className="animate-spin h-5 w-5" />
+                  </>
+                ) : (
+                  <>Enviar</>
+                  )}
+              </Button>
+              <Button
+                type="button"
+                disabled={resendCountdown > 0}
+                onClick={requestOtp}
+                className="bg-zinc-800 border border-zinc-400 text-zinc-400 hover:bg-zinc-300"
+              >
+                Reenviar {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
+              </Button>
+            </form>
           </div>
-
-          {isPending && (
-            <div className="flex flex-row text-wrap justify-center">
-              <p className="text-zinc-300 text-xs">Enviando...</p>
-            </div>
-          )}
         </div>
-      </form>
-      <div id="recaptcha-container" />
+      </div>
     </div>
   );
 }

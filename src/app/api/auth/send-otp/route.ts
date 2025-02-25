@@ -1,11 +1,6 @@
 import { db } from '@/lib/db';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-
-interface ResponseData {
-    status: number;
-    message: string;
-}
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -17,11 +12,12 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-    const { userId, email } = req.body;
-
+export async function POST(req: Request) {
+    const body = await req.json();
+    const { email, userId } = body || {};
+    console.log('Request body:', email + userId);
     if (!userId || !email) {
-        return res.status(400).json({ status: 400, message: 'Missing userId or email' });
+        return NextResponse.json({ status: 400, slug: "missing-parameters", message: 'Missing userId or email' });
     }
 
     try {
@@ -31,7 +27,7 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse<Res
 
         const existingOTP = await db.oTPCodes.findFirst({
             where: {
-                userId,
+                userId: Number(userId),
             },
         });
 
@@ -43,9 +39,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse<Res
             });
         }
 
+
         await db.oTPCodes.create({
             data: {
-                userId,
+                userId: Number(userId),
                 code: otpCode,
             },
         });
@@ -101,9 +98,9 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse<Res
 
         transporter.sendMail(mailOptions);
 
-        return res.status(200).json({ status: 200, message: 'OTP code sent to email' });
+        return NextResponse.json({ status: 200, slug: "otp-sent", message: 'OTP code sent to email' });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ status: 500, message: String(error) });
+        return NextResponse.json({ status: 500, slug: "server-error", message: String(error) });
     }
 }

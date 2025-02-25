@@ -10,14 +10,14 @@ export default function Home() {
       <RandomBg />
       <Header />
       <main className="flex flex-col mt-5 md:flex-row mx-auto max-w-[1280px] lg:flex-row lg:p-5 gap-5 lg:gap-0 md:gap-0 items-center justify-between">
-        <div className="flex flex-col items-center md:items-start lg:items-start gap-4 w-[30rem]">
+        <div className="flex flex-col items-center md:items-start px-6 lg:items-start gap-4 w-[30rem]">
           <img
             alt="luma logo"
             className="w-[20%] opacity-50"
             src="/Luma/wordmark-light.png"
           />
-          <h1 className="w-fit font-medium text-center lg:text-left md:text-left text-5xl md:text-6xl lg:text-6xl flex flex-col">
-            <span className="w-[100%] lg:w-[70%] text-wrap">Eventos encantadores</span>
+          <h1 className="w-[90%] font-medium text-center lg:text-left md:text-left text-4xl md:text-6xl lg:text-6xl flex flex-col">
+            <span className="w-[100%] lg:w-[70%] text-zinc-50 text-wrap">Eventos encantadores</span>
             <span className="w-[100%] lg:w-[70%] text-wrap text-transparent bg-gradient-homepage">
               começam aqui
             </span>

@@ -34,3 +34,4 @@ model OTPCodes {
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id])
 }
+
