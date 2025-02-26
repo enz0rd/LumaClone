@@ -12,7 +12,7 @@ interface HeaderProps {
 export function Header({
   logoStyle = "icon",
   isSignedIn = false,
-}: HeaderProps) {
+}: HeaderProps) {  
   return (
     <header className="fixed-top flex flex-row w-full justify-between items-center py-3 px-4">
       <div className="flex flex-row items-center gap-3">
