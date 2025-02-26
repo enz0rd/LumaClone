@@ -63,7 +63,7 @@ export function RandomBg() {
 
     useEffect(() => {
         setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
-    }, []);
+    }, [randomColor]);
 
     const randomGradient = `radial-gradient(circle at top right, ${randomColor.zero} 0%, ${randomColor.eighteen} 18%, ${randomColor.thirtyTwo} 32%, ${randomColor.fiftyTwo} 52%, ${randomColor.sixtyEight} 68%, ${randomColor.eightySeven} 87%, ${randomColor.hundred} 100%)`;
 

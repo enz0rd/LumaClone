@@ -53,7 +53,6 @@ function OtpLogin() {
         const token = getToken.data.token;
         localStorage.setItem("token", token);
         localStorage.removeItem("userId");
-        localStorage.removeItem("email");
         if(resp.data.hasUsername == null) {
           return router.push('/finish-signup');
         }
@@ -87,7 +86,6 @@ function OtpLogin() {
           "Content-Type": "application/json",
         },
       });
-      console.log(resp);
     } catch (error) {
       console.log(error);
       setResendCountdown(0);
@@ -135,7 +133,7 @@ function OtpLogin() {
                       <InputOTPSlot
                         key={index}
                         index={index}
-                        className="w-[3rem] focus:text-zinc-50 rounded-lg border-[.075rem] border-zinc-400 h-[3rem]"
+                        className="w-[3rem] hover:border-zinc-50 transition focus:text-zinc-50 rounded-lg border-[.075rem] border-zinc-400 h-[3rem]"
                       />
                     ))}
                   </InputOTPGroup>

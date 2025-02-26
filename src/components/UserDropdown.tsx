@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export function UserDropdown() {
     const userEmail = localStorage.getItem("email");
-    const userName = localStorage.getItem("name");
+    const userName = localStorage.getItem("username");
 
     const router = useRouter();
 
@@ -28,9 +28,9 @@ export function UserDropdown() {
         <Link href={'/profile'} className="flex flex-row gap-3 p-3 hover:bg-zinc-800 transition rounded-lg cursor-pointer">
             <div className="text-zinc-300 rounded-full h-[2.5rem] w-[2.5rem] 
             aspect-square bg-gradient-to-tl from-[#F66371] to-[#C0CEF6]" />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 w-[75%]">
                 <span className="font-semibold">{userName || "You"}</span>
-                <span className="text-sm text-zinc-500 w-[75%] overflow-hidden text-ellipsis">{userEmail || "example@mail.comasdasdasdasdasda"}</span>
+                <span className="text-sm text-zinc-500 overflow-hidden text-ellipsis">{userEmail || "example@mail.com"}</span>
             </div>
         </Link>
         <hr className="w-full border-1 border-zinc-700"/>

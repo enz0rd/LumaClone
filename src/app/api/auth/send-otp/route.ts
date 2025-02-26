@@ -15,7 +15,6 @@ const transporter = nodemailer.createTransport({
 export async function POST(req: Request) {
     const body = await req.json();
     const { email, userId } = body || {};
-    console.log('Request body:', email + userId);
     if (!userId || !email) {
         return NextResponse.json({ status: 400, slug: "missing-parameters", message: 'Missing userId or email' });
     }
@@ -24,13 +23,22 @@ export async function POST(req: Request) {
         console.log('Sending OTP code to email:', email);
         console.log('User ID:', userId);
         const otpCode = Array.from(crypto.getRandomValues(new Uint8Array(2)), num => num.toString().padStart(3, '0')).join('');
-
-        const existingOTP = await db.oTPCodes.findFirst({
+        const userExists = await db.user.findUnique({
             where: {
-                userId: Number(userId),
+                id: userId,
             },
         });
 
+        if (!userExists) {
+            return NextResponse.json({ status: 404, slug: "user-not-found", message: 'User not found' });
+        }
+
+        const existingOTP = await db.oTPCodes.findFirst({
+            where: {
+                userId: userId,
+            },
+        });
+        
         if(existingOTP) {
             await db.oTPCodes.delete({
                 where: {
@@ -38,11 +46,10 @@ export async function POST(req: Request) {
                 },
             });
         }
-
-
+        
         await db.oTPCodes.create({
             data: {
-                userId: Number(userId),
+                userId: userId,
                 code: otpCode,
             },
         });
@@ -100,7 +107,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ status: 200, slug: "otp-sent", message: 'OTP code sent to email' });
     } catch (error) {
-        console.error(error);
-        return NextResponse.json({ status: 500, slug: "server-error", message: String(error) });
+        console.error(JSON.stringify(error));
+        return NextResponse.json({ status: 500, slug: "server-error", message: JSON.stringify(error) });
     }
 }

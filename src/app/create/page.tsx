@@ -22,7 +22,7 @@ export default function Page() {
                     <Header logoStyle="wordmark" isSignedIn={isSignedIn} />
                 </div>
             ) : (
-                <Header logoStyle="wordmark" isSignedIn={isSignedIn} />
+                <Header isSignedIn={isSignedIn} />
             )}
             <main>
                 {!isSignedIn ? (

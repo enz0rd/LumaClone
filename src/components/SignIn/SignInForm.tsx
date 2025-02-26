@@ -62,10 +62,10 @@ export function SignInForm() {
     const resp = await axios.post("/api/user", data);
     const respData = resp.data;
     if (respData.status !== 200) {
-      if (respData.slug == "not-verified") {
+      if (respData.slug == "user-exists") {
         localStorage.setItem("userId", respData.user.id);
         localStorage.setItem("email", respData.user.email);
-        const sendCode = await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
+        await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
           {
             headers: {
               'Content-Type': 'application/json',

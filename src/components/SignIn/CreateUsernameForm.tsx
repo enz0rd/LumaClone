@@ -1,12 +1,10 @@
 "use client";
-import { CiLogin } from "react-icons/ci";
-import { BsGoogle } from "react-icons/bs";
-
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
-import axios from "axios";
+import { api } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const UsernameSchema = z.object({
   username: z.string().min(3, {
@@ -16,7 +14,7 @@ const UsernameSchema = z.object({
 
 type UsernameData = z.infer<typeof UsernameSchema>;
 
-export function CreateUsernameForm() {
+export function CreateUsernameForm({ setWelcome }: { setWelcome: (value: boolean) => void }) {
   const {
     register,
     handleSubmit,
@@ -26,23 +24,25 @@ export function CreateUsernameForm() {
   });
 
   const onSubmit = async (data: UsernameData) => {
-    console.log(data);
     try {
-      const resp = await axios.patch('/api/user', {
+      const resp = await api.patch('/api/user', {
         username: data.username
-      }, {
-        headers: {
-          Authorization: localStorage.getItem('token')
-        }
       })
-      console.log(resp)
+      if(resp.data.status === 200) {
+        localStorage.setItem('username', data.username)
+        setWelcome(true);
+      }
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div className="flex w-full h-[90vh] items-center">
+    <motion.div 
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      initial={{ opacity: 1 }}
+    className="flex w-full h-[90vh] items-center">
       <div className="m-auto flex justify-center w-[90%]">
         <div className="border-[.075rem] border-zinc-700 bg-zinc-900 bg-opacity-[65%] backdrop-blur-5 rounded-3xl">
           <div className="p-6 flex flex-col gap-3 w-full max-w-[23rem] text-left ">
@@ -83,6 +83,6 @@ export function CreateUsernameForm() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

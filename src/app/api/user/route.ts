@@ -1,3 +1,4 @@
+import { JwtTokenPayloadStructure } from './../auth/generate-token/route';
 import { db } from "@/lib/db";
 import { jwtDecrypt } from "jose";
 import { NextResponse } from "next/server";
@@ -7,27 +8,35 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
+    console.log(body.email);
+
     // check if user exists
-    const existingUser = await db.user.findUnique({
+    const existingUser = await db.userEmails.findFirst({
       where: { email: body.email },
-    });
+    }) ;
 
     if (existingUser) {
       return NextResponse.json({
         status: 409,
-        slug: "not-verified",
+        slug: "user-exists",
         user: {
-          id: existingUser.id,
+          id: existingUser.userId,
           email: existingUser.email,
         },
-        message: "User with this email exists but is not verified",
+        message: "Proceeding to OTP login",
       });
     }
-
+    
     const newUser = await db.user.create({
       data: {
-        email: body.email,
         verified: false,
+      },
+    });
+
+    await db.userEmails.create({
+      data: {
+        email: body.email,
+        userId: newUser.id,
       },
     });
 
@@ -35,7 +44,7 @@ export async function POST(req: Request) {
       status: 200,
       slug: "user-created",
       user: {
-        id: 1,
+        id: newUser.id,
         email: body.email,
       },
       message: "User created successfully",
@@ -69,10 +78,40 @@ export async function PATCH(req: Request) {
         message: "JWT secret is not defined",
       });
     }
-    console.log(token)
-    let payload;
     try {
-      payload = await DecryptToken(token);
+      const payload: JwtTokenPayloadStructure = await DecryptToken(token);
+
+      const user = await db.user.findUnique({
+        where: { id: payload.userId },
+      });
+
+      if (!user) {
+        return NextResponse.json({
+          status: 404,
+          slug: "user-not-found",
+          message: "User not found",
+        });
+      }
+
+      console.log(user);
+
+      const body = await req.json();
+
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          ...body
+        }
+      })
+
+      return NextResponse.json({
+        status: 200,
+        slug: "user-patched",
+        patched: {
+          ...body
+        },
+        message: "User verified successfully",
+      });
     } catch (error) {
       return NextResponse.json({
         status: 400,
@@ -80,15 +119,6 @@ export async function PATCH(req: Request) {
         message: "Invalid token",
       });
     }
-    const userId = payload;
-    NextResponse.json({
-      status: 200,
-      slug: "user-verified",
-      user: {
-        id: userId,
-      },
-      message: "User verified successfully",
-    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({

@@ -70,7 +70,7 @@ export function Header({
           </>
         ) : (
           <>
-            <span>Explorar</span> <ArrowUpRight size={15} />
+            <Link href={'/explore'} className="hover:text-zinc-50 transition text-zinc-500 font-medium flex flex-row gap-1 items-center">Explorar <ArrowUpRight size={15} /></Link>
             <Link
               href={"/signin"}
               className="bg-zinc-700 font-semibold opacity-[.7] hover:text-zinc-700 hover:bg-zinc-50 transition text-sm text-zinc-50 px-3 py-1 rounded-full"

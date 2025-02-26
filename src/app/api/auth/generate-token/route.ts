@@ -1,6 +1,5 @@
-import { jwtDecrypt, SignJWT } from "jose";
+import { importJWK, jwtDecrypt, jwtVerify, SignJWT } from "jose";
 import { NextResponse } from "next/server";
-import jose from "jose"
 
 export async function POST(req: Request) {
     const body = await req.json();
@@ -26,14 +25,28 @@ export async function POST(req: Request) {
     }
 }
 
+export interface JwtTokenPayloadStructure {
+    email: string;
+    userId: string;
+    iat: number;
+    exp: number;
+    iss: string;
+    aud: string;
+}
+
 export async function DecryptToken(token: string) {
     try {
-        console.log("teste ")
-        const { payload } = await jwtDecrypt(token, new TextEncoder().encode(process.env.JWT_SECRET));
-        console.log("teste 2")
+        if (!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined');
+        }
+        const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
+        const { payload }: { payload: JwtTokenPayloadStructure } = await jwtVerify(token, secretKey);
         return payload;
     } catch (error) {
         console.error('Decryption error:', error);
+        if ((error as any).code === 'ERR_JWE_INVALID') {
+            throw new Error('Invalid token format');
+        }
         throw new Error('Invalid token');
     }
 }

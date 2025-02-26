@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const checkOtp = await db.oTPCodes.findFirst({
         where: {
-            userId: Number(body.userId),
+            userId: body.userId,
         },
     })
 
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     
     await db.user.update({
         where: {
-            id: Number(body.userId),
+            id: body.userId,
         },
         data: {
             verified: true,
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
     const hasUsername = await db.user.findUnique({
         where: {
-            id: Number(body.userId),
+            id: body.userId,
         },
         select: {
             username: true,

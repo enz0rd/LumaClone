@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.7.4",
     "@hookform/resolvers": "^4.1.0",
     "@prisma/client": "^6.4.1",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -23,8 +24,8 @@
     "input-otp": "^1.4.2",
     "jose": "^6.0.6",
     "lucide-react": "^0.475.0",
+    "motion": "^12.4.7",
     "next": "15.1.7",
-    "next-auth": "^4.24.11",
     "next-video": "^2.1.0",
     "nodemailer": "^6.10.0",
     "react": "^19.0.0",
