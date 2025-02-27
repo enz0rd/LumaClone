@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-
+  document.title = "Verifique sua conta ∙ Luma";
   const [welcome, setWelcome] = useState(false);
 
   const router = useRouter();

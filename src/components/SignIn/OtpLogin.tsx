@@ -8,10 +8,11 @@ import {
 import { useRouter } from "next/navigation";
 import { Loader2Icon, LockKeyholeIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const OtpLoginSchema = z.object({
   otp: z.string().length(6, {
@@ -106,7 +107,11 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
   return (
     <div className="flex w-full h-[90vh] items-center">
       <div className="m-auto flex justify-center">
-        <div className="border border-zinc-700 bg-zinc-900 bg-opacity-65 backdrop-blur-5 rounded-3xl">
+        <motion.div 
+            initial={{ scaleX: 0, width: 0, scaleY: 0 }}
+            animate={{ scaleX: 1, width: "auto", scaleY: 1 }}
+            transition={{ duration: 0.5 }}
+            className="border border-zinc-700 bg-zinc-900 bg-opacity-65 backdrop-blur-5 rounded-3xl">
           <div className="p-6 flex flex-col gap-3 w-[23rem] text-left">
             <div className="bg-zinc-800 rounded-full p-4 w-fit">
               <LockKeyholeIcon className="text-zinc-300 scale-x-[-1] h-8 w-8" />
@@ -173,7 +178,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
               </div>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

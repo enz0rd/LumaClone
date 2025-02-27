@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
-    
+    document.title = "Finalize o cadastro ∙ Luma";
     const [welcome, setWelcome] = useState(false);
     
     const router = useRouter();

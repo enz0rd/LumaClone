@@ -5,13 +5,17 @@ import { SignIn } from "@/components/SignIn/SignIn";
 import { useEffect, useState } from "react";
 
 export default function Page() {
+    document.title = "Criar evento ∙ Luma";
+
     const [isSignedIn, setIsSignedIn] = useState(false);
     useEffect(() => {
         if(!isSignedIn) {
+            console.log(localStorage.getItem("token"));
             if (localStorage.getItem("token")) {
                 setIsSignedIn(true);
             }
         }
+        return;
     }, [isSignedIn]);
 
     return (

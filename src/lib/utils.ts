@@ -6,8 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+const token = localStorage.getItem('token') || ''
+
 export const api = axios.create({
   headers: {
-    Authorization: localStorage.getItem('token'),
+    Authorization: token,
   }
 })
