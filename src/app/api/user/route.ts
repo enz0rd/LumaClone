@@ -11,17 +11,22 @@ export async function POST(req: Request) {
     console.log(body.email);
 
     // check if user exists
-    const existingUser = await db.userEmails.findFirst({
+    const existingUserEmail = await db.userEmails.findUnique({
       where: { email: body.email },
     }) ;
 
-    if (existingUser) {
+    
+    if (existingUserEmail) {
+      const existingUser = await db.user.findUnique({
+        where: { id: existingUserEmail?.userId },
+      });
       return NextResponse.json({
         status: 409,
         slug: "user-exists",
         user: {
-          id: existingUser.userId,
-          email: existingUser.email,
+          id: existingUserEmail.userId,
+          email: existingUserEmail.email,
+          username: existingUser?.username 
         },
         message: "Proceeding to OTP login",
       });

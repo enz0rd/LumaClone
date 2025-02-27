@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Loader2Icon, LockKeyholeIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -21,7 +21,7 @@ const OtpLoginSchema = z.object({
 
 type OtpLoginData = z.infer<typeof OtpLoginSchema>;
 
-function OtpLogin() {
+function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
   const {
     register,
     handleSubmit,
@@ -56,7 +56,8 @@ function OtpLogin() {
         if(resp.data.hasUsername == null) {
           return router.push('/finish-signup');
         }
-        router.push("/create");
+        localStorage.setItem("username", resp.data.hasUsername);
+        setWelcome(true);
       } else {
         setIsLoading(false);
         setErrorResponse(resp.data.message);

@@ -8,12 +8,10 @@ const SignInSchema = z.object({
   email: z.string().email({
     message: "Por favor, insira um email válido.",
   }),
-  phone: z
-    .string()
-    .min(10, {
+  phone: z.string({
       message: "Por favor, insira um número de telefone válido.",
     })
-    .optional(),
+    .optional().nullable(),
 });
 
 type SignInData = z.infer<typeof SignInSchema>;
@@ -96,6 +94,13 @@ export function SignInForm() {
     }
     localStorage.setItem("userId", respData.user.id);
     localStorage.setItem("email", respData.user.email);
+    await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    );
     return router.push("/verifyAccount");
   };
 
