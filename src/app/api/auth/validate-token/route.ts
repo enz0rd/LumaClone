@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { jwtVerify } from "jose";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
     const token = req.headers.get("Authorization");
     
     if (!token) {

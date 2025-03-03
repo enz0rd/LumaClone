@@ -28,7 +28,7 @@ const UserFormSchema = z.object({
     linkedin: z.string().optional(),
     twitter: z.string().optional(),
     tiktok: z.string().optional(),
-    website: z.string().optional(),
+    website: z.string().optional()
   }),
 });
 

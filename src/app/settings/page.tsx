@@ -17,7 +17,7 @@ export default function Page() {
         if(!isSignedIn) {
         const validateToken = async () => {
                 if(localStorage.getItem("token")) {
-                    const resp = await api.post("/api/auth/validate-token", {})
+                    const resp = await api.get("/api/auth/validate-token", {})
                     if(resp.status === 200) {
                         setIsSignedIn(true);
                     } else {
@@ -28,6 +28,7 @@ export default function Page() {
             };
             validateToken();
         }
+        return;
     }, [isSignedIn]);
 
     return (

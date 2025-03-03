@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ErrorModal, ErrorModalProps } from "../Error/ErrorModal";
+import { api } from "@/lib/utils";
 
 export function SignInForm() {
   const {
@@ -41,11 +42,7 @@ export function SignInForm() {
         if (!token) {
           return;
         }
-        const resp = await axios.post("/api/auth/validate-token", { }, {
-          headers: {
-            'Authorization': `${token}`,
-          }
-        });
+        const resp = await api.get("/api/auth/validate-token");
         if (resp.data.status === 200) {
           router.push("/create");
         } else {
@@ -54,6 +51,7 @@ export function SignInForm() {
       }
       verifyToken();
     }
+    return;
   }, [isTokenVerified])
   
   const onSubmit = async (data: SignInData) => {
