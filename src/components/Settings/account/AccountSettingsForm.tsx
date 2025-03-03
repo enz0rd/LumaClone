@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
 import {
   BsInstagram,
   BsLinkedin,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/bs";
 import { Globe, UserCheck2 } from "lucide-react";
 import { UserImageUploadInput } from "./UserImageUploadInput";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const UserFormSchema = z.object({
   name: z.string().nonempty({
@@ -48,9 +48,9 @@ export function AccountSettingsForm() {
   }
 
   return (
-    <div className="flex; flex-col gap-2 mt-5">
-      <h1 className="text-2xl font-semibold text-zinc-50">Seu perfil</h1>
-      <span className="text-md text-zinc-300">
+    <div className="flex flex-col gap-2 mt-5">
+      <h1 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-50">Seu perfil</h1>
+      <span className="text-md text-zinc-700 dark:text-zinc-300">
         Escolha como você será exibido como anfitrião ou convidado.
       </span>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
@@ -59,7 +59,7 @@ export function AccountSettingsForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="name"
-                className="text-zinc-300 font-semibold text-sm"
+                className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm"
               >
                 Nome
               </label>
@@ -67,7 +67,8 @@ export function AccountSettingsForm() {
                 type="text"
                 id="name"
                 {...register("name")}
-                className="transition hover:border-zinc-400 focus-visible:border-zinc-50 border-zinc-700 text-zinc-50"
+                className="transition focus-visible:border-zinc-50 hover:border-zinc-700 border-zinc-300 text-zinc-950 
+                dark:hover:border-zinc-400  dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50"
               />
               {errors.name && (
                 <span className="text-red-500 text-xs">
@@ -78,19 +79,22 @@ export function AccountSettingsForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="username"
-                className="text-zinc-300 font-semibold text-sm"
+                className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm"
               >
                 Nome de usuário
               </label>
               <div className="flex items-center">
-                <div className="text-zinc-300 font-semibold text-sm px-4 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm px-4 flex my-auto h-full 
+                dark:bg-zinc-800 bg-zinc-200 border border-r-0 dark:border-zinc-700 border-zinc-300 rounded-l-lg">
                   <span className="my-auto">@</span>
                 </div>
                 <Input
                   type="text"
                   id="username"
                   {...register("username")}
-                  className="transition hover:border-zinc-400 focus-visible:border-zinc-50 border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950
+                  rounded-l-none"
                 />
               </div>
               {errors.username && (
@@ -102,7 +106,7 @@ export function AccountSettingsForm() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="bio"
-                className="text-zinc-300 font-semibold text-sm"
+                className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm"
               >
                 Bio
               </label>
@@ -110,7 +114,8 @@ export function AccountSettingsForm() {
                 maxLength={140}
                 id="bio"
                 {...register("bio")}
-                className="transition hover:border-zinc-400 focus-visible:border-zinc-50 border-zinc-700 text-zinc-50
+                className="transition hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950
+                          dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50
                             text-wrap placeholder:font-semibold placeholder:text-base
                             min-h-[5rem] rounded-lg"
                 placeholder="Compartilhe um pouco sobre seu histórico e interesses"
@@ -125,14 +130,16 @@ export function AccountSettingsForm() {
           <UserImageUploadInput />
         </div>
         <div className="flex flex-col gap-2 mt-5">
-          <label htmlFor="bio" className="text-zinc-300 font-semibold text-sm">
+          <label htmlFor="bio" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
             Links Sociais
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-3 gap-4 w-fit">
             <div className="flex items-center gap-3">
               <BsInstagram size={17} className="text-zinc-500" />
               <div className="flex items-center max-w-[17rem] h-[2.3rem]">
-                <div className="text-zinc-300 font-semibold text-md px-3 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="text-zinc-700 bg-zinc-200 border-zinc-300
+                dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-700
+                font-semibold text-md px-3 flex my-auto h-full border border-r-0 rounded-l-lg">
                   <span className="my-auto">instagram.com/</span>
                 </div>
                 <Input
@@ -140,14 +147,19 @@ export function AccountSettingsForm() {
                   id="instagram"
                   {...register("social.instagram")}
                   placeholder="nome de usuário"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full rounded-l-none"
                 />
               </div>
             </div>
             <div className="flex items-center gap-3">
               <BsTwitterX size={17} className="text-zinc-500" />
               <div className="flex items-center max-w-[17rem] h-[2.3rem]">
-                <div className="text-zinc-300 font-semibold text-md px-3 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="text-zinc-700 bg-zinc-200 border-zinc-300
+                dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-700
+                font-semibold text-md px-3 flex my-auto h-full border border-r-0 rounded-l-lg">
                   <span className="my-auto">x.com/</span>
                 </div>
                 <Input
@@ -155,14 +167,19 @@ export function AccountSettingsForm() {
                   id="twitter"
                   {...register("social.twitter")}
                   placeholder="nome de usuário"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full rounded-l-none"
                 />
               </div>
             </div>
             <div className="flex items-center gap-3">
               <BsYoutube size={17} className="text-zinc-500" />
               <div className="flex items-center max-w-[17rem] h-[2.3rem]">
-                <div className="text-zinc-300 font-semibold text-md px-3 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="text-zinc-700 bg-zinc-200 border-zinc-300
+                dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-700
+                font-semibold text-md px-3 flex my-auto h-full border border-r-0 rounded-l-lg">
                   <span className="my-auto">youtube.com/@</span>
                 </div>
                 <Input
@@ -170,14 +187,19 @@ export function AccountSettingsForm() {
                   id="youtube"
                   {...register("social.youtube")}
                   placeholder="nome de usuário"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full rounded-l-none"
                 />
               </div>
             </div>
             <div className="flex items-center gap-3">
               <BsTiktok size={17} className="text-zinc-500" />
               <div className="flex items-center max-w-[17rem] h-[2.3rem]">
-                <div className="text-zinc-300 font-semibold text-md px-3 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="text-zinc-700 bg-zinc-200 border-zinc-300
+                dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-700
+                font-semibold text-md px-3 flex my-auto h-full border border-r-0 rounded-l-lg">
                   <span className="my-auto">tiktok.com/@</span>
                 </div>
                 <Input
@@ -185,14 +207,19 @@ export function AccountSettingsForm() {
                   id="tiktok"
                   {...register("social.tiktok")}
                   placeholder="nome de usuário"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full rounded-l-none"
                 />
               </div>
             </div>
             <div className="flex items-center gap-3">
               <BsLinkedin size={17} className="text-zinc-500" />
               <div className="flex items-center max-w-[17rem] h-[2.3rem]">
-                <div className="text-zinc-300 font-semibold text-md px-3 flex my-auto h-full bg-zinc-800 border border-r-0 border-zinc-700 rounded-l-lg">
+                <div className="text-zinc-700 bg-zinc-200 border-zinc-300
+                dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-700
+                font-semibold text-md px-3 flex my-auto h-full border border-r-0 rounded-l-lg">
                   <span className="my-auto">linkedin.com</span>
                 </div>
                 <Input
@@ -200,7 +227,10 @@ export function AccountSettingsForm() {
                   id="linkedin"
                   {...register("social.linkedin")}
                   placeholder="/in/identificador"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50 rounded-l-none"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full rounded-l-none"
                 />
               </div>
             </div>
@@ -212,14 +242,20 @@ export function AccountSettingsForm() {
                   id="website"
                   {...register("social.website")}
                   placeholder="Seu site"
-                  className="transition hover:border-zinc-400 placeholder:text-base placeholder:font-semibold focus-visible:border-zinc-50 h-full border-zinc-700 text-zinc-50"
+                  className="transition 
+                  dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
+                  hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
+                  placeholder:text-base placeholder:font-semibold h-full"
                 />
               </div>
             </div>
           </div>
-          <Button className="mt-5 bg-zinc-50 w-fit hover:bg-zinc-300" >
-            <UserCheck2 size={20} className="text-zinc-800" />
-            <span className="text-zinc-800 font-medium text-base">
+          <Button className="mt-5 w-fit
+          dark:bg-zinc-50 dark:hover:bg-zinc-300 
+          bg-zinc-950 hover:bg-zinc-700 
+          " >
+            <UserCheck2 size={20} className="dark:text-zinc-800 text-zinc-200" />
+            <span className="dark:text-zinc-800 text-zinc-200 font-medium text-base">
               Salvar alterações
             </span>
           </Button>

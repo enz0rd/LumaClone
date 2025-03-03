@@ -1,3 +1,4 @@
+import { Providers } from "./providers";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -13,11 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`antialiased`}
         >
-        {children}
+          <Providers>
+            {children}
+          </Providers>
       </body>
     </html>
   );

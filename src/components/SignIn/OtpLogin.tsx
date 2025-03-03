@@ -111,13 +111,14 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
             initial={{ scaleX: 0, width: 0, scaleY: 0 }}
             animate={{ scaleX: 1, width: "auto", scaleY: 1 }}
             transition={{ duration: 0.5 }}
-            className="border border-zinc-700 bg-zinc-900 bg-opacity-65 backdrop-blur-5 rounded-3xl">
+            className="border bg-opacity-65 backdrop-blur-5 rounded-3xl
+            border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
           <div className="p-6 flex flex-col gap-3 w-[23rem] text-left">
-            <div className="bg-zinc-800 rounded-full p-4 w-fit">
-              <LockKeyholeIcon className="text-zinc-300 scale-x-[-1] h-8 w-8" />
+            <div className="dark:bg-zinc-800 bg-zinc-200 rounded-full p-4 w-fit">
+              <LockKeyholeIcon className="text-zinc-700 dark:text-zinc-300 scale-x-[-1] h-8 w-8" />
             </div>
-            <h1 className="text-2xl text-zinc-100 font-semibold">Código OTP</h1>
-            <p className="text-sm font-semibold text-zinc-400">
+            <h1 className="text-2xl dark:text-zinc-100 text-zinc-900 font-semibold">Código OTP</h1>
+            <p className="text-sm font-semibold dark:text-zinc-400 text-zinc-600">
               Por favor, insira o código OTP enviado ao email informado para
               entrar.
             </p>
@@ -134,12 +135,15 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
                   }
                   className="flex justify-center mx-auto w-full"
                 >
-                  <InputOTPGroup className="flex gap-3 group text-zinc-50 w-full">
+                  <InputOTPGroup className="flex gap-3 group dark:text-zinc-50 text-zinc-950 w-full">
                     {Array.from({ length: 6 }).map((_, index) => (
                       <InputOTPSlot
                         key={index}
                         index={index}
-                        className="w-[3rem] hover:border-zinc-50 transition focus:text-zinc-50 rounded-lg border-[.075rem] border-zinc-400 h-[3rem]"
+                        className="w-[3rem] transition rounded-lg border-[.075rem] h-[3rem]
+                        dark:hover:border-zinc-50 dark:focus:text-zinc-50 dark:border-zinc-400
+                        hover:border-zinc-950 focus:text-zinc-950 border-zinc-600
+                        "
                       />
                     ))}
                   </InputOTPGroup>
@@ -156,7 +160,8 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
               <div className="flex flex-row mt-2 justify-between items-center">
                 <Button
                   type="submit"
-                  className="bg-zinc-50 text-zinc-800 hover:bg-zinc-300"
+                  className="bg-zinc-950 text-zinc-200 hover:bg-zinc-700
+                  dark:bg-zinc-50 dark:text-zinc-800 dark:hover:bg-zinc-300"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -171,7 +176,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
                   type="button"
                   disabled={resendCountdown > 0}
                   onClick={requestOtp}
-                  className="bg-transparent text-zinc-400"
+                  className="bg-transparent dark:text-zinc-400 text-zinc-600"
                 >
                   Reenviar {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
                 </Button>

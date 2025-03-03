@@ -129,12 +129,14 @@ export function SignInForm() {
             <div className="flex flex-row justify-between">
               <label
                 htmlFor="email"
-                className="hover:cursor-pointer hover:text-zinc-100 font-semibold text-sm text-zinc-300"
+                className="hover:cursor-pointer font-semibold text-sm 
+                dark:hover:text-zinc-100 dark:text-zinc-300 hover:text-zinc-900 text-zinc-700"
               >
                 Email
               </label>
               <span
-                className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm text-zinc-400 flex gap-1 items-center"
+                className="hover:cursor-pointer transition font-semibold text-sm flex gap-1 items-center
+                dark:hover:text-zinc-200 dark:text-zinc-400 hover:text-zinc-800 text-zinc-600"
                 onClick={() => setMethod("phone")}
               >
                 <SmartphoneIcon size={15} /> Usar Telefone
@@ -144,7 +146,9 @@ export function SignInForm() {
               type="email"
               id="email"
               placeholder="voce@email.com"
-              className="placeholder-zinc-600 p-2 hover:border-zinc-200 transition bg-zinc-900 border-[.075rem] border-zinc-700 rounded-lg text-zinc-100"
+              className="p-2 transition border-[.075rem] rounded-lg
+              dark:placeholder-zinc-600 dark:hover:border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 
+              placeholder-zinc-400 hover:border-zinc-800 bg-zinc-100 border-zinc-300 text-zinc-900 "
               {...register("email")}
             />
             {errors.email && (
@@ -152,7 +156,10 @@ export function SignInForm() {
             )}
             <button
               type="submit"
-              className="mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium"
+              className="mt-2 p-2 rounded-lg transition font-medium
+              dark:bg-zinc-50 dark:text-zinc-800 dark:hover:bg-zinc-300
+              bg-zinc-950 text-zinc-200 hover:bg-zinc-700
+              "
             >
               Continuar com Email
             </button>
@@ -162,12 +169,13 @@ export function SignInForm() {
             <div className="flex flex-row justify-between">
               <label
                 htmlFor="phone"
-                className="hover:cursor-pointer hover:text-zinc-100 font-semibold text-sm text-zinc-300"
+                className="hover:cursor-pointer font-semibold text-sm
+                dark:hover:text-zinc-100 dark:text-zinc-300 hover:text-zinc-900 text-zinc-700"
               >
                 Número de Telefone
               </label>
               <span
-                className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm text-zinc-400 flex gap-1 items-center"
+                className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm dark:text-zinc-400 text-zinc-600 flex gap-1 items-center"
                 onClick={() => setMethod("email")}
               >
                 <Mail size={15} /> Usar Email
@@ -177,13 +185,19 @@ export function SignInForm() {
               type="phone"
               id="phone"
               placeholder="+55 11 96123 4567"
-              className="placeholder-zinc-600 p-2 hover:border-zinc-200 transition bg-zinc-900 border-[.075rem] border-zinc-700 rounded-lg text-zinc-100"
+              className="p-2 transition border-[.075rem] rounded-lg
+              dark:placeholder-zinc-600 dark:hover:border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 
+              placeholder-zinc-400 hover:border-zinc-800 bg-zinc-100 border-zinc-300 text-zinc-900 
+              "
               {...register("phone")}
             />
             {errors.phone && (
               <p className="text-red-500 text-xs">{errors.phone.message}</p>
             )}
-            <button className="mt-2 bg-zinc-50 text-zinc-800 p-2 rounded-lg hover:bg-zinc-300 transition font-medium">
+            <button className="mt-2 p-2 rounded-lg transition font-medium
+            dark:bg-zinc-50 dark:text-zinc-800 dark:hover:bg-zinc-300
+            bg-zinc-950 text-zinc-200 hover:bg-zinc-700
+            ">
               Continuar com telefone
             </button>
           </>

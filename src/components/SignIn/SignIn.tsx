@@ -12,23 +12,26 @@ export function SignIn() {
             initial={{ scaleX: 0, width: 0, scaleY: 0 }}
             animate={{ scaleX: 1, width: "auto", scaleY: 1 }}
             transition={{ duration: 0.5 }}
-            className="border-[.075rem] border-zinc-700 bg-zinc-900 bg-opacity-[65%] backdrop-blur-5 rounded-3xl">
+            className="border-[.075rem] dark:border-zinc-700 dark:bg-zinc-900 border-zinc-300 bg-zinc-100 bg-opacity-[65%] backdrop-blur-5 rounded-3xl">
           <div className="p-6 flex flex-col gap-3 text-left ">
             <CiLogin
               size={50}
-              className="text-zinc-300 scale-x-[-1] rounded-full p-3 h-[4rem] w-[4rem] bg-zinc-800"
+              className="dark:text-zinc-300 dark:bg-zinc-800 text-zinc-700 bg-zinc-200 scale-x-[-1] rounded-full p-3 h-[4rem] w-[4rem]"
             />
-            <h1 className="text-2xl text-zinc-100 font-semibold">
+            <h1 className="text-2xl dark:text-zinc-100 text-zinc-900 font-semibold">
               Bem-vindo à Luma
             </h1>
-            <p className="text-sm font-semibold text-zinc-400">
+            <p className="text-sm font-semibold dark:text-zinc-400 text-zinc-600">
               Por favor, faça login ou cadastre-se abaixo.
             </p>
             <SignInForm />
           </div>
-          <hr className="border-zinc-700" />
+          <hr className="dark:border-zinc-700 border-zinc-300" />
           <div className="px-6 py-3 w-full justify-center mb-2">
-            <button className="mt-2 flex gap-2 bg-zinc-800 text-zinc-400 p-2 rounded-lg hover:bg-zinc-400 hover:text-zinc-900 transition w-full font-medium">
+            <button className="mt-2 flex gap-2 p-2 rounded-lg transition w-full font-medium
+            dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-400 dark:hover:text-zinc-900
+            bg-zinc-200 text-zinc-600 hover:bg-zinc-600 hover:text-zinc-100
+            ">
               <span className="items-center flex gap-2 mx-auto">
                 <BsGoogle size={20} /> Entrar com o Google
               </span>

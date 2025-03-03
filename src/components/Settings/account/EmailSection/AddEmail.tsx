@@ -8,13 +8,13 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
   AlertDialogTitle,
-} from "../ui/alert-dialog";
-import { Button } from "../ui/button";
+} from "../../../ui/alert-dialog";
+import { Button } from "../../../ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2Icon, Mail, PencilLine, Plus, X } from "lucide-react";
-import { Input } from "../ui/input";
+import { Loader2Icon, Mail, Plus, X } from "lucide-react";
+import { Input } from "../../../ui/input";
 import { useState } from "react";
 
 const EmailSchema = z.object({
@@ -29,12 +29,10 @@ const EmailSchema = z.object({
 
 type Email = z.infer<typeof EmailSchema>;
 
-export function ChangeEmail({
-  emailIndex,
-  onChangeEmail,
+export function AddEmail({
+  onAddEmail,
 }: {
-  emailIndex: number;
-  onChangeEmail: (email: string, index: number) => void;
+  onAddEmail: (email: { email: string; isMain: boolean }) => void;
 }) {
   const {
     register,
@@ -44,74 +42,75 @@ export function ChangeEmail({
     resolver: zodResolver(EmailSchema),
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitEmail = (data: Email) => {
-    console.log("Changing email num " + emailIndex + " to " + data.email);
+    console.log(data);
     setIsLoading(true);
-    setTimeout(() => {
+    setInterval(() => {
       setIsLoading(false);
-      onChangeEmail(data.email, emailIndex);
+      onAddEmail({ email: data.email, isMain: false });
       setIsOpen(false);
     }, 2000);
-    // onAddEmail();
   };
-
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <button
-          className="hover:bg-zinc-700 transition 
-                text-zinc-400 flex items-center gap-2 py-2 text-sm px-3 rounded-lg"
+          className="dark:bg-zinc-800 dark:hover:bg-zinc-400 dark:hover:text-zinc-900 dark:text-zinc-400 
+          bg-zinc-200 hover:bg-zinc-600 hover:text-zinc-100 text-zinc-600
+          transition flex items-center gap-2 py-[.2rem] text-sm font-semibold px-2 rounded-lg"
         >
-          <PencilLine className="h-4 w-4" />
-          <span className="text-zinc-100">Alterar Email</span>
+          <Plus className="h-4 w-4" />
+          <span>Adicionar Email</span>
         </button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="w-[90%] max-w-[20rem] rounded-2xl bg-zinc-900 border-none text-zinc-100 visible z-[999]">
+      <AlertDialogContent className="w-[90%] max-w-[20rem] rounded-2xl border-none visible z-[999]
+      dark:bg-zinc-900 dark:text-zinc-100 bg-zinc-100 text-zinc-900">
         <div className="flex flex-row justify-between gap-4">
-          <div className="bg-zinc-800 rounded-full p-4 w-fit">
-            <Mail className="text-zinc-300 scale-x-[-1] h-8 w-8" />
+          <div className="dark:bg-zinc-800 bg-zinc-200 rounded-full p-4 w-fit">
+            <Mail className="dark:text-zinc-300 text-zinc-700 scale-x-[-1] h-8 w-8" />
           </div>
           <AlertDialogCancel
             onClick={() => {}}
             className="border-none bg-transparent hover:bg-transparent"
           >
-            <X className="text-zinc-300 h-6 w-6 " />
+            <X className="dark:text-zinc-300 text-zinc-700 h-6 w-6 " />
           </AlertDialogCancel>
         </div>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-xl text-start">
-            Alterar Email
+            Adicionar Email
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
-        <span className="text-md text-zinc-300 mb-3 text-sm font-medium">
-            Altere seu endereço de email principal do Luma. Este email é
-            compartilhado com os anfitriões quando você se inscreve em seus
-            eventos.
+          <span className="text-md dark:text-zinc-300 text-zinc-700 mb-3 text-sm font-medium">
+            Adicione um email adicional para receber convites de eventos
+            enviados para esse endereço.
           </span>
         </AlertDialogDescription>
         <form
           onSubmit={handleSubmit(submitEmail)}
           className="flex flex-col gap-2"
         >
-          <label htmlFor="email" className="text-sm text-zinc-200">
-            Novo Endereço de Email
+          <label htmlFor="email" className="text-sm dark:text-zinc-200 text-zinc-800">
+            Endereço de Email
           </label>
           <Input
             type="email"
             placeholder="voce@email.com"
-            autoFocus
-            className="font-medium text-base border-zinc-800 hover:border-zinc-300 focus-visible:border-zinc-50 transition"
+            className="font-medium text-base transition
+            dark:border-zinc-800 dark:hover:border-zinc-300 dark:focus-visible:border-zinc-50
+            border-zinc-200 hover:border-zinc-700 focus-visible:border-zinc-950"
             {...register("email")}
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
           )}
           <Button
+            type="submit"
             variant="secondary"
             className="text-base mt-2"
             size="default"
@@ -120,7 +119,7 @@ export function ChangeEmail({
             {isLoading ? (
               <Loader2Icon className="animate-spin h-5 w-5" />
             ) : (
-              "Atualizar"
+              "Adicionar Email"
             )}
           </Button>
         </form>
