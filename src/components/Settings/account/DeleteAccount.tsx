@@ -89,7 +89,7 @@ export function DeleteAccount() {
               {isLoading ? (
                 <Loader2Icon className="animate-spin h-5 w-5" />
               ) : (
-                "Remover"
+                "Excluir"
               )}
             </Button>
             <AlertDialogCancel asChild className="border-none m-0">

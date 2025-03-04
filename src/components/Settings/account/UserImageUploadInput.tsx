@@ -1,23 +1,113 @@
+"use client";
+
 import { ArrowUp } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { api } from "@/lib/utils";
+import { ErrorModal } from "@/components/Error/ErrorModal";
+
+type ImagePreview = {
+  image: string;
+  name: string;
+};
 
 export function UserImageUploadInput() {
+  const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
+
+  type Error = { message: string; title: string };
+
+  const [error, setError] = useState<Error>();
+
+  useEffect(() => {
+    const userImage = localStorage.getItem("userImage");
+    if(userImage && userImage.startsWith('http')) {
+      setImagePreview({
+        image: userImage,
+        name: 'profile'
+      });
+    }
+  }, []);
+
+  const handleSetImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      console.log("Nenhum arquivo selecionado");
+      return;
+    }
+
+    const file = e.target.files[0];
+    if (file && ["image/png", "image/jpeg"].includes(file.type)) {
+      if (file.size > 5 * 1024 * 1024) {
+        console.log("Arquivo muito grande. Tamanho máximo: 5MB");
+        setError({
+          message: "Arquivo muito grande. Tamanho máximo: 5MB",
+          title: "Tamanho excedido",
+        });
+        return;
+      }
+      const formData = new FormData();
+      formData.append("image", file);
+      const resp = await api.post("/api/user/upload-image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview({
+        image: previewUrl,
+        name: file.name,
+      });
+      localStorage.setItem('userImage', resp.data.url)
+    } else {
+      setError({
+        message:
+          "O arquivo selecionado é inválido. Formatos suportados: PNG e JPG.",
+        title: "Arquivo Inválido",
+      });
+      console.log("Arquivo inválido");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
+      {error && (
+        <ErrorModal
+          message={error.message}
+          title={error.title}
+        />
+      )}
       <span className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm">
         Foto de Perfil
       </span>
       <label htmlFor="image">
         <div className="relative w-[7rem] h-[7rem] cursor-pointer rounded-full aspect-square bg-zinc-200 dark:bg-zinc-800 group">
-          <div className="w-[7rem] h-[7rem] cursor-pointer rounded-full aspect-square bg-gradient-to-tl from-[#F66371] to-[#C0CEF6]"></div>
-          <ArrowUp
-            size={20}
-            className="transition group-hover:bg-pink-500 
-            dark:bg-zinc-50 dark:border-zinc-800 dark:group-hover:text-zinc-50 dark:text-zinc-900
-            bg-zinc-950 border-zinc-200 group-hover:text-zinc-950 text-zinc-100
-            p-1 w-[2rem] h-[2rem] mt-[-2.3rem] mr-[-.002rem] border-2  rounded-full m-auto"
-          />
+          <div className="relative">
+            {imagePreview ? (
+              <Image
+                className="w-[7rem] h-[7rem] cursor-pointer rounded-full aspect-square object-cover"
+                src={imagePreview.image}
+                width={300}
+                height={300}
+                alt={imagePreview.name}
+              />
+            ) : (
+              <div className="w-[7rem] h-[7rem] cursor-pointer rounded-full aspect-square bg-gradient-to-tl from-[#F66371] to-[#C0CEF6]"></div>
+            )}
+            <ArrowUp
+              size={20}
+              className="transition group-hover:bg-pink-500 
+              dark:bg-zinc-50 dark:border-zinc-800 dark:group-hover:text-zinc-50 dark:text-zinc-900
+              bg-zinc-950 border-zinc-200 group-hover:text-zinc-950 text-zinc-100
+              p-1 w-[2rem] h-[2rem] absolute bottom-0 right-0 border-2 rounded-full m-auto z-10"
+            />
+          </div>
         </div>
-        <input type="file" id="image" className="hidden" />
+        <input
+          onChange={handleSetImage}
+          type="file"
+          accept="image/jpeg, image/png"
+          id="image"
+          className="hidden"
+        />
       </label>
     </div>
   );
