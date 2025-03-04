@@ -53,6 +53,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
         });
         const token = getToken.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("userImage", getToken.data.userImage);
         localStorage.removeItem("userId");
         if(resp.data.hasUsername == null) {
           return router.push('/finish-signup');

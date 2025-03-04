@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail, SmartphoneIcon } from "lucide-react";
+import { Loader2Icon, Mail, SmartphoneIcon } from "lucide-react";
 import axios from "axios";
 
 const SignInSchema = z.object({
   email: z.string().email({
     message: "Por favor, insira um email válido.",
   }),
-  phone: z.string({
+  phone: z
+    .string({
       message: "Por favor, insira um número de telefone válido.",
     })
-    .optional().nullable(),
+    .optional()
+    .nullable(),
 });
 
 type SignInData = z.infer<typeof SignInSchema>;
@@ -22,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ErrorModal, ErrorModalProps } from "../Error/ErrorModal";
 import { api } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 export function SignInForm() {
   const {
@@ -31,12 +34,12 @@ export function SignInForm() {
   } = useForm<SignInData>({
     resolver: zodResolver(SignInSchema),
   });
-  
+
   const router = useRouter();
-  
+
   const [isTokenVerified, setTokenVerified] = useState(false);
   useEffect(() => {
-    if(!isTokenVerified) {
+    if (!isTokenVerified) {
       const verifyToken = async () => {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -48,24 +51,29 @@ export function SignInForm() {
         } else {
           setTokenVerified(true);
         }
-      }
+      };
       verifyToken();
     }
     return;
-  }, [isTokenVerified])
-  
+  }, [isTokenVerified]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (data: SignInData) => {
+    setIsLoading(true);
     const resp = await axios.post("/api/user", data);
     const respData = resp.data;
     if (respData.status !== 200) {
       if (respData.slug == "user-exists") {
         localStorage.setItem("userId", respData.user.id);
         localStorage.setItem("email", respData.user.email);
-        await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
+        await axios.post(
+          "api/auth/send-otp",
+          { userId: respData.user.id, email: respData.user.email },
           {
             headers: {
-              'Content-Type': 'application/json',
-            }
+              "Content-Type": "application/json",
+            },
           }
         );
         router.push("/verifyAccount");
@@ -78,6 +86,7 @@ export function SignInForm() {
         });
         setIsErrorVisible(true);
         console.log(respData.message);
+        setIsLoading(false);
         return;
       } else {
         setErrorContent({
@@ -87,16 +96,19 @@ export function SignInForm() {
         });
         setIsErrorVisible(true);
         console.log(respData.message);
+        setIsLoading(false);
         return;
       }
     }
     localStorage.setItem("userId", respData.user.id);
     localStorage.setItem("email", respData.user.email);
-    await axios.post('api/auth/send-otp', { userId: respData.user.id, email: respData.user.email },
+    await axios.post(
+      "api/auth/send-otp",
+      { userId: respData.user.id, email: respData.user.email },
       {
         headers: {
-          'Content-Type': 'application/json',
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
     return router.push("/verifyAccount");
@@ -154,15 +166,20 @@ export function SignInForm() {
             {errors.email && (
               <p className="text-red-500 text-xs">{errors.email.message}</p>
             )}
-            <button
+            <Button
               type="submit"
-              className="mt-2 p-2 rounded-lg transition font-medium
+              className="mt-2 p-2 rounded-lg transition font-medium text-center
               dark:bg-zinc-50 dark:text-zinc-800 dark:hover:bg-zinc-300
               bg-zinc-950 text-zinc-200 hover:bg-zinc-700
               "
+              disabled={isLoading}
             >
-              Continuar com Email
-            </button>
+              {isLoading ? (
+                <Loader2Icon className="animate-spin h-5 w-5" />
+              ) : (
+                "Continuar com Email"
+              )}
+            </Button>
           </form>
         ) : (
           <>
@@ -194,10 +211,12 @@ export function SignInForm() {
             {errors.phone && (
               <p className="text-red-500 text-xs">{errors.phone.message}</p>
             )}
-            <button className="mt-2 p-2 rounded-lg transition font-medium
+            <button
+              className="mt-2 p-2 rounded-lg transition font-medium
             dark:bg-zinc-50 dark:text-zinc-800 dark:hover:bg-zinc-300
             bg-zinc-950 text-zinc-200 hover:bg-zinc-700
-            ">
+            "
+            >
               Continuar com telefone
             </button>
           </>

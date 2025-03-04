@@ -5,6 +5,7 @@ import { UserClock } from "./UserClock";
 import { GrNotification } from "react-icons/gr";
 import { UserDropdown } from "./UserDropdown";
 import React from "react";
+import { LumaLogoSVG } from "./LumaLogo";
 
 interface HeaderProps {
   logoStyle?: "icon" | "wordmark";
@@ -31,17 +32,7 @@ export function Header({
           className="hover:brightness-200 transition 2s hover:cursor-pointer"
         >
           {logoStyle === "icon" ? (
-            <svg
-              className="w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 133 134"
-            >
-                <path
-                fill={currentTheme ? "#808080" : "#404040"}
-                d="M133 67C96.282 67 66.5 36.994 66.5 0c0 36.994-29.782 67-66.5 67 36.718 0 66.5 30.006 66.5 67 0-36.994 29.782-67 66.5-67"
-                ></path>
-            </svg>
+            <LumaLogoSVG />
           ) : (
             <img
               src="/Luma/wordmark-light.png"

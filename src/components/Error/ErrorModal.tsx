@@ -5,6 +5,7 @@ import { useState } from "react";
 export interface ErrorModalProps {
     message: string;
     title: string;
+    onClose?: () => void;
     onError?: () => void;
     hasBackButton?: boolean;
     onBack?: () => void;

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { api } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { EzTooltip } from "../EzTooltip";
 
 const UsernameSchema = z.object({
   username: z.string().min(3, {
@@ -57,8 +58,10 @@ export function CreateUsernameForm({ setWelcome }: { setWelcome: (value: boolean
             <form onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-5">
               <div className="flex flex-row gap-3 items-center">
-                <div className="scale-x-[-1] rounded-full p-3 h-[4rem] w-[4rem] aspect-square bg-gradient-to-tl from-[#F66371] to-[#C0CEF6] border-[.075rem] 
-                dark:text-zinc-300 dark:border-zinc-600 text-zinc-700 border-zinc-400" />
+                <EzTooltip content="Para mudar sua imagem de perfil, acesse Configurações > Conta" >
+                  <div className="scale-x-[-1] rounded-full p-3 h-[4rem] w-[4rem] aspect-square bg-gradient-to-tl from-[#F66371] to-[#C0CEF6] border-[.075rem] 
+                  dark:text-zinc-300 dark:border-zinc-600 text-zinc-700 border-zinc-400" />
+                </EzTooltip>
                 <div className="flex flex-col gap-2 w-full">
                   <label
                     htmlFor="username"

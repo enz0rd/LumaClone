@@ -97,7 +97,7 @@ export function UserImageUploadInput() {
               className="transition group-hover:bg-pink-500 
               dark:bg-zinc-50 dark:border-zinc-800 dark:group-hover:text-zinc-50 dark:text-zinc-900
               bg-zinc-950 border-zinc-200 group-hover:text-zinc-950 text-zinc-100
-              p-1 w-[2rem] h-[2rem] absolute bottom-0 right-0 border-2 rounded-full m-auto z-10"
+              p-1 w-[2rem] h-[2rem] absolute bottom-0 right-0 border-2 rounded-full m-auto z-9"
             />
           </div>
         </div>

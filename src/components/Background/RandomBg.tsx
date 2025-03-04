@@ -60,10 +60,17 @@ const colors = [
 
 export function RandomBg() {
     const [randomColor, setRandomColor] = useState(colors[0]);
+    const [mounted, setMounted] = useState(false);  // Variável para controlar a montagem
 
     useEffect(() => {
-        setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
-    }, [randomColor]);
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (mounted) {
+            setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
+        }
+    }, [mounted]);  // Agora só muda após o componente ser montado
 
     const randomGradient = `radial-gradient(circle at top right, ${randomColor.zero} 0%, ${randomColor.eighteen} 18%, ${randomColor.thirtyTwo} 32%, ${randomColor.fiftyTwo} 52%, ${randomColor.sixtyEight} 68%, ${randomColor.eightySeven} 87%, ${randomColor.hundred} 100%)`;
 

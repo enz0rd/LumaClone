@@ -14,7 +14,7 @@ export default function Page() {
   const router = useRouter();
   useEffect(() => {
     if(welcome) {
-      setInterval(() => {
+      setTimeout(() => {
         router.push("/create");
       }, 3000);
     }

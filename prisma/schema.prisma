@@ -24,7 +24,7 @@ model User {
   verified                  Boolean                     @default(false)
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
-  image_url                  String?
+  imageUrl                  String?
   Calendar                  Calendar[]
   otpCodes                  OTPCodes[]
   UserCalendarSubscriptions UserCalendarSubscriptions[]

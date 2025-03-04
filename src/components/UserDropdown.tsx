@@ -33,9 +33,7 @@ export function UserDropdown() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("name");
+    localStorage.clear();
     router.push("/signin");
   };
 

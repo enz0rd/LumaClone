@@ -97,10 +97,10 @@ export function ExibitionSettings() {
       <div className="mt-5 w-[15rem] flex flex-col gap-2">
         <label className="text-zinc-700 dark:text-zinc-300 text-sm font-semibold">Idioma</label>
         <Select>
-          <SelectTrigger className="text-zinc-800 dark:text-zinc-50">
+          <SelectTrigger className="text-zinc-900 dark:text-zinc-50 bg-zinc-100 dark:bg-zinc-800">
             <SelectValue placeholder="Português (Brasil)" />
           </SelectTrigger>
-          <SelectContent className="dark:text-zinc-50 dark:bg-zinc-800 text-zinc-800 bg-zinc-50">
+          <SelectContent className="dark:text-zinc-50 dark:bg-zinc-800 text-zinc-900 bg-zinc-50">
             <SelectItem value="pt-br">Português (Brasil)</SelectItem>
             <SelectItem value="en">English</SelectItem>
             <SelectItem value="demo">This demo only have 2 languages</SelectItem>
