@@ -13,6 +13,7 @@ import z from "zod";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const OtpLoginSchema = z.object({
   otp: z.string().length(6, {
@@ -105,6 +106,8 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
     }
   }, [resendCountdown]);
 
+  const { t } = useTranslation();
+
   return (
     <div className="flex w-full h-[90vh] items-center">
       <div className="m-auto flex justify-center">
@@ -118,10 +121,9 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
             <div className="dark:bg-zinc-800 bg-zinc-200 rounded-full p-4 w-fit">
               <LockKeyholeIcon className="text-zinc-700 dark:text-zinc-300 scale-x-[-1] h-8 w-8" />
             </div>
-            <h1 className="text-2xl dark:text-zinc-100 text-zinc-900 font-semibold">Código OTP</h1>
+            <h1 className="text-2xl dark:text-zinc-100 text-zinc-900 font-semibold">{t("OTPLogin.title")}</h1>
             <p className="text-sm font-semibold dark:text-zinc-400 text-zinc-600">
-              Por favor, insira o código OTP enviado ao email informado para
-              entrar.
+            {t("OTPLogin.subtitle")}
             </p>
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -170,7 +172,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
                       <Loader2Icon className="animate-spin h-5 w-5" />
                     </>
                   ) : (
-                    <>Enviar</>
+                    <>{t("OTPLogin.verify")}</>
                     )}
                 </Button>
                 <Button
@@ -179,7 +181,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
                   onClick={requestOtp}
                   className="bg-transparent dark:text-zinc-400 text-zinc-600"
                 >
-                  Reenviar {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
+                  {t("OTPLogin.resend")} {resendCountdown > 0 ? `(${resendCountdown}s)` : ""}
                 </Button>
               </div>
             </form>

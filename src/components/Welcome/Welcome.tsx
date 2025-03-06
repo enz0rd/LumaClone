@@ -1,10 +1,12 @@
-import { BsEmojiAstonished, BsEmojiLaughing, BsEmojiSmile } from "react-icons/bs";
+import { BsEmojiSmile } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export function Welcome() {
     const username = localStorage.getItem('username');
     const imageURL = localStorage.getItem('userImage');
+    const { t } = useTranslation();
 
     return (
         <div className="w-full h-screen flex justify-center">
@@ -36,7 +38,7 @@ export function Welcome() {
                             <BsEmojiSmile className="lg:text-8xl md:text-6xl sm:text-6xl text-3xl text-zinc-900" />
                         </div>
                     )}
-                    <h1 className="text-3xl font-semibold text-zinc-950 dark:text-zinc-200 mt-5">Bem-vindo à Luma</h1>
+                    <h1 className="text-3xl font-semibold text-zinc-950 dark:text-zinc-200 mt-5">{t("Welcome")}</h1>
                     <span className="text-xl font-medium text-zinc-500">{username}</span>
                 </motion.div>
             </div>

@@ -11,6 +11,7 @@ import { ActiveDevices } from "./account/ActiveDevices/ActiveDevices";
 import { DeleteAccount } from "./account/DeleteAccount";
 import { ExibitionSettings } from "./preferences/Exibition";
 import { NotificationPreferences } from "./preferences/Notification/NotificationPreferences";
+import { useTranslation } from "react-i18next";
 
 export function SettingsForm() {
   const [isSticky, setSticky] = useState(false);
@@ -40,13 +41,15 @@ export function SettingsForm() {
     return setActiveTab(tab);
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col justify-center gap-5 mt-[3rem]">
       <Tabs defaultValue={activeTab} className="w-full">
         <div className={`sticky top-0 z-10 backdrop-blur-sm ${isSticky ? "dark:bg-zinc-900/45 bg-zinc-50/45" : ""}`}>
           <div className="container mx-auto lg:max-w-[1000px] mb-3 flex gap-5 px-3 md:px-1 lg:px-0">
             <h1 className={`dark:text-zinc-50 text-zinc-900 font-semibold ${isSticky ? "text-xl mt-2" : "text-3xl"}`}>
-              Configurações
+              {t("Settings.title")}
             </h1>
           </div>
           <div className="container mx-auto px-3 lg:max-w-[1000px] flex gap-5 md:px-1 lg:px-0">
@@ -62,7 +65,7 @@ export function SettingsForm() {
                             px-0 rounded-none data-[state=active]:bg-transparent"
                             onClick={() => handleChangeTab("account")}
                             >
-                Conta
+                {t("Settings.tabs.account")}
               </TabsTrigger>
               <TabsTrigger
                 value="preferences"
@@ -73,7 +76,7 @@ export function SettingsForm() {
                 px-0 rounded-none data-[state=active]:bg-transparent"
                 onClick={() => handleChangeTab("preferences")}
                 >
-                Preferências
+                {t("Settings.tabs.preferences")}
               </TabsTrigger>
               <TabsTrigger
                 value="payment"
@@ -84,7 +87,7 @@ export function SettingsForm() {
                 px-0 rounded-none data-[state=active]:bg-transparent"
                 onClick={() => handleChangeTab("payment")}
               >
-                Pagamento
+                {t("Settings.tabs.payment")}
               </TabsTrigger>
             </TabsList>
           </div>

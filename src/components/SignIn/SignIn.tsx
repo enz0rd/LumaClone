@@ -3,8 +3,10 @@ import { CiLogin } from "react-icons/ci";
 import { BsGoogle } from "react-icons/bs";
 import { SignInForm } from "./SignInForm";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function SignIn() {
+  const { t } = useTranslation();
   return (
     <div className="flex w-full h-[90vh] items-center">
       <div className="m-auto flex justify-center">
@@ -19,10 +21,10 @@ export function SignIn() {
               className="dark:text-zinc-300 dark:bg-zinc-800 text-zinc-700 bg-zinc-200 scale-x-[-1] rounded-full p-3 h-[4rem] w-[4rem]"
             />
             <h1 className="text-2xl dark:text-zinc-100 text-zinc-900 font-semibold">
-              Bem-vindo à Luma
+              {t("SignIn.title")}
             </h1>
             <p className="text-sm font-semibold dark:text-zinc-400 text-zinc-600">
-              Por favor, faça login ou cadastre-se abaixo.
+            {t("SignIn.subtitle")}
             </p>
             <SignInForm />
           </div>
@@ -33,7 +35,7 @@ export function SignIn() {
             bg-zinc-200 text-zinc-600 hover:bg-zinc-600 hover:text-zinc-100
             ">
               <span className="items-center flex gap-2 mx-auto">
-                <BsGoogle size={20} /> Entrar com o Google
+                <BsGoogle size={20} /> {t("SignIn.continueWith.google")}
               </span>
             </button>
           </div>

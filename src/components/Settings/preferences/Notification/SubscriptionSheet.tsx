@@ -13,6 +13,7 @@ import { ChevronRight, ChevronsRight } from "lucide-react";
 import { ZeroEventsIcon } from "./ZeroEventsIcon";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SubscriptionSheetProps {
   content: {
@@ -41,6 +42,8 @@ export function SubscriptionSheet({
   });
   const [activeTab, setActiveTab] = useState(content.type); // Novo estado para aba ativa
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     const fetchCountAndName = async () => {
       // Simulação de um fetch para uma API
@@ -52,7 +55,7 @@ export function SubscriptionSheet({
       setCountFetch(data);
 
       if (activeTab === "pages") {
-        const name = data.pages === 0 ? "0 Página" : `${data.pages} Páginas`;
+        const name = data.pages === 0 ? `0 ${t("Settings.preferences.notifications.yourSubscriptions.page")}` : `${data.pages} ${t("Settings.preferences.notifications.yourSubscriptions.page")}s`;
         setNameAndCount({
           ...nameAndCount,
           pages: { name, count: data.pages },
@@ -60,8 +63,8 @@ export function SubscriptionSheet({
       } else {
         const name =
           data.calendars === 0
-            ? "0 Calendário"
-            : `${data.calendars} Calendários`;
+            ? `0 ${t("Settings.preferences.notifications.yourSubscriptions.calendar")}`
+            : `${data.calendars} ${t("Settings.preferences.notifications.yourSubscriptions.calendar")}s`;
         setNameAndCount({
           ...nameAndCount,
           calendars: { name, count: data.calendars },
@@ -116,17 +119,16 @@ export function SubscriptionSheet({
               <ChevronsRight className="text-zinc-500 hover:bg-zinc-500 hover:text-zinc-50 cursor-pointer transition rounded-lg" />
             </SheetClose>
             <span className="font-semibold text-zinc-500">
-              Gerenciar Assinaturas
+              {t("Settings.preferences.notifications.yourSubscriptions.manageSubscriptions")}
             </span>
           </div>
         </SheetHeader>
         <div className="p-4 flex flex-col gap-2">
           <SheetTitle className="text-xl font-medium">
-            Suas Assinaturas
+          {t("Settings.preferences.notifications.yourSubscriptions.yourSubscriptions")}
           </SheetTitle>
           <p className="text-sm text-zinc-500">
-            Escolha quais páginas de descoberta do Luma você quer acompanhar e
-            gerencie suas assinaturas de calendário.
+          {t("Settings.preferences.notifications.yourSubscriptions.subtitle")}
           </p>
         </div>
         <Tabs value={activeTab} className="w-full">
@@ -139,7 +141,7 @@ export function SubscriptionSheet({
                             transition-border-opacity px-0 rounded-none data-[state=active]:bg-transparent"
               onClick={() => setActiveTab("pages")}
             >
-              Páginas de descoberta
+              {t("Settings.preferences.notifications.yourSubscriptions.tabs.discoverPages")}
             </TabsTrigger>
             <TabsTrigger
               value="calendars"
@@ -149,7 +151,7 @@ export function SubscriptionSheet({
                             transition-border-opacity px-0 rounded-none data-[state=active]:bg-transparent"
               onClick={() => setActiveTab("calendars")}
             >
-              Calendários
+              {t("Settings.preferences.notifications.yourSubscriptions.tabs.calendars")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="pages" className="w-full">
@@ -157,10 +159,10 @@ export function SubscriptionSheet({
               <div className="flex flex-col items-center text-center justify-center gap-2 p-4 mt-10">
                 <ZeroEventsIcon className="w-[5rem] mb-2" />
                 <h1 className="text-zinc-400 dark:text-zinc-500 text-lg font-bold">
-                  Sem assinatura de Página de Descoberta
+                {t("Settings.preferences.notifications.yourSubscriptions.noPages.title")}
                 </h1>
                 <p className="text-zinc-400/70 dark:text-zinc-600 text-sm font-semibold">
-                  Você não se inscreveu em nenhuma página de descoberta do Luma
+                {t("Settings.preferences.notifications.yourSubscriptions.noPages.subtitle")}
                 </p>
                 <Link
                   href={"/discover"}
@@ -168,7 +170,7 @@ export function SubscriptionSheet({
                   bg-zinc-100 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-100 
                   dark:bg-zinc-800 dark:hover:bg-zinc-300 dark:hover:text-zinc-800"
                 >
-                  Descobrir Eventos
+                  {t("Settings.preferences.notifications.yourSubscriptions.discover")}
                 </Link>
               </div>
             ) : null}
@@ -178,10 +180,10 @@ export function SubscriptionSheet({
               <div className="flex flex-col items-center text-center justify-center gap-2 p-4 mt-10">
                 <ZeroEventsIcon className="w-[5rem] mb-2" />
                 <h1 className="text-zinc-400 dark:text-zinc-500 text-lg font-bold">
-                  Sem assinatura de Calendário
+                {t("Settings.preferences.notifications.yourSubscriptions.noCalendars.title")}
                 </h1>
                 <p className="text-zinc-400/70 dark:text-zinc-600 text-sm font-semibold">
-                  Você não tem assinaturas de calendário ativas.
+                {t("Settings.preferences.notifications.yourSubscriptions.noCalendars.subtitle")}
                 </p>
                 <Link
                   href={"/discover"}
@@ -189,7 +191,7 @@ export function SubscriptionSheet({
                   bg-zinc-100 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-100 
                   dark:bg-zinc-800 dark:hover:bg-zinc-300 dark:hover:text-zinc-800"
                 >
-                  Descobrir Calendários
+                  {t("Settings.preferences.notifications.yourSubscriptions.discover")}
                 </Link>
               </div>
             ) : null}

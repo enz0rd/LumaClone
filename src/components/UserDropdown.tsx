@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type ImagePreview = {
   image: string;
@@ -18,7 +19,7 @@ export function UserDropdown() {
   const userEmail = localStorage.getItem("email");
   const userName = localStorage.getItem("username");
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
-
+  const { t } = useTranslation();
   
   useEffect(() => {
     const userImage = localStorage.getItem("userImage");
@@ -88,19 +89,19 @@ export function UserDropdown() {
             href="/profile"
             className="dark:hover:text-zinc-50 hover:text-zinc-950 transition"
           >
-            Ver Perfil
+            {t("Header.UserDropdown.seeProfile")}
           </Link>
           <Link
             href="/settings"
             className="dark:hover:text-zinc-50 hover:text-zinc-950 transition"
-          >
-            Configurações
+            >
+          {t("Header.UserDropdown.settings")}
           </Link>
           <div
             onClick={handleLogout}
             className="bg-none cursor-pointer text-left dark:hover:text-zinc-50 hover:text-zinc-950 transition"
-          >
-            Sair
+            >
+            {t("Header.UserDropdown.signout")}
           </div>
         </div>
       </DropdownMenuContent>

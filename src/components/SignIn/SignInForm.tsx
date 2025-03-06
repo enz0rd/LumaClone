@@ -25,6 +25,7 @@ import { z } from "zod";
 import { ErrorModal, ErrorModalProps } from "../Error/ErrorModal";
 import { api } from "@/lib/utils";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
 export function SignInForm() {
   const {
@@ -34,6 +35,7 @@ export function SignInForm() {
   } = useForm<SignInData>({
     resolver: zodResolver(SignInSchema),
   });
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -151,13 +153,13 @@ export function SignInForm() {
                 dark:hover:text-zinc-200 dark:text-zinc-400 hover:text-zinc-800 text-zinc-600"
                 onClick={() => setMethod("phone")}
               >
-                <SmartphoneIcon size={15} /> Usar Telefone
+                <SmartphoneIcon size={15} /> {t("SignIn.usePhone")}
               </span>
             </div>
             <input
               type="email"
               id="email"
-              placeholder="voce@email.com"
+              placeholder={t("SignIn.emailPlaceholder")}
               className="p-2 transition border-[.075rem] rounded-lg
               dark:placeholder-zinc-600 dark:hover:border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 
               placeholder-zinc-400 hover:border-zinc-800 bg-zinc-100 border-zinc-300 text-zinc-900 "
@@ -177,7 +179,7 @@ export function SignInForm() {
               {isLoading ? (
                 <Loader2Icon className="animate-spin h-5 w-5" />
               ) : (
-                "Continuar com Email"
+                t("SignIn.continueWith.email")
               )}
             </Button>
           </form>
@@ -189,19 +191,19 @@ export function SignInForm() {
                 className="hover:cursor-pointer font-semibold text-sm
                 dark:hover:text-zinc-100 dark:text-zinc-300 hover:text-zinc-900 text-zinc-700"
               >
-                Número de Telefone
+                {t("SignIn.phoneNumber")}
               </label>
               <span
                 className="hover:cursor-pointer hover:text-zinc-200 transition font-semibold text-sm dark:text-zinc-400 text-zinc-600 flex gap-1 items-center"
                 onClick={() => setMethod("email")}
               >
-                <Mail size={15} /> Usar Email
+                <Mail size={15} /> {t("SignIn.useEmail")}
               </span>
             </div>
             <input
               type="phone"
               id="phone"
-              placeholder="+55 11 96123 4567"
+              placeholder={t("SignIn.phonePlaceholder")}
               className="p-2 transition border-[.075rem] rounded-lg
               dark:placeholder-zinc-600 dark:hover:border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 
               placeholder-zinc-400 hover:border-zinc-800 bg-zinc-100 border-zinc-300 text-zinc-900 
@@ -217,7 +219,7 @@ export function SignInForm() {
             bg-zinc-950 text-zinc-200 hover:bg-zinc-700
             "
             >
-              Continuar com telefone
+              {t("SignIn.continueWith.phone")}
             </button>
           </>
         )}

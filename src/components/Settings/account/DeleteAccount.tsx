@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { AlertTriangleIcon, Loader2Icon, X } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaTrash } from "react-icons/fa";
 
 export function DeleteAccount() {
@@ -27,20 +27,21 @@ export function DeleteAccount() {
     }, 3000);
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="my-8 pt-8 border-t w-full dark:border-zinc-800 border-zinc-300">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold dark:text-zinc-50 text-zinc-950">Excluir Conta</h1>
+        <h1 className="text-2xl font-semibold dark:text-zinc-50 text-zinc-950">{t("Settings.account.DeleteAccount.title")}</h1>
       </div>
       <span className="text-md dark:text-zinc-300 text-zinc-700">
-        Se você não deseja mais usar o Luma, pode excluir sua conta
-        permanentemente.
+      {t("Settings.account.DeleteAccount.subtitle")}
       </span>
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button className="mt-4 bg-red-500 hover:bg-red-600 flex flex-row gap-3">
             <AlertTriangleIcon className="w-6 h-6 text-zinc-50" />
-            <span className="text-zinc-50">Excluir Minha Conta</span>
+            <span className="text-zinc-50">{t("Settings.account.DeleteAccount.delete.button")}</span>
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="w-[90%] max-w-[22rem] rounded-2xl dark:bg-zinc-900 bg-zinc-100 border-none dark:text-zinc-100 text-zinc-900 visible z-[999] gap-2">
@@ -57,11 +58,11 @@ export function DeleteAccount() {
           </div>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl text-start">
-                Excluir Conta
+            {t("Settings.account.DeleteAccount.delete.title")}
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogDescription className="text-md dark:text-zinc-300 text-zinc-700 text-sm font-medium">
-            Tem certeza de que deseja excluir a conta vinculada a{" "}
+          {t("Settings.account.DeleteAccount.delete.subtitle")}
             <strong>{localStorage.getItem("email")}</strong>?
           </AlertDialogDescription>
           <div className="flex flex-row items-center gap-2">
@@ -77,7 +78,7 @@ export function DeleteAccount() {
               htmlFor="deleteCheckbox"
               className="text-sm dark:text-zinc-300 text-zinc-700 mt-4"
             >
-              Eu entendo que não poderei recuperar minha conta.
+              {t("Settings.account.DeleteAccount.delete.checkbox")}
             </label>
           </div>
           <div className="flex flex-row w-full gap-4 mt-5 justify-between items-center">
@@ -89,14 +90,14 @@ export function DeleteAccount() {
               {isLoading ? (
                 <Loader2Icon className="animate-spin h-5 w-5" />
               ) : (
-                "Excluir"
+                t("Settings.account.DeleteAccount.delete.delete")
               )}
             </Button>
             <AlertDialogCancel asChild className="border-none m-0">
               <Button className="dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-800 dark:hover:bg-zinc-300 
               bg-zinc-200 text-zinc-700 hover:text-zinc-200 hover:bg-zinc-700 
               w-full border-none text-base">
-                Cancelar
+                {t("Settings.account.DeleteAccount.delete.cancel")}
               </Button>
             </AlertDialogCancel>
           </div>

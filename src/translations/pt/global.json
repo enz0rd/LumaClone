@@ -1,0 +1,239 @@
+{
+  "Header": {
+    "nav": {
+      "events": "Eventos",
+      "calendars": "Calendários",
+      "discover": "Descobrir"
+    },
+    "createEvent": "Criar Evento",
+    "explore": "Explorar",
+    "signin": "Entrar",
+    "UserDropdown": {
+      "seeProfile": "Ver Perfil",
+      "settings": "Configurações",
+      "signout": "Sair"
+    }
+  },
+  "landingPage": {
+    "enchantingEvents": "Eventos encantadores",
+    "startHere": "começam aqui",
+    "p": "Crie uma página de evento, convide amigos e venda ingressos. Organize um evento memorável hoje.",
+    "createEvent": "Crie Seu Primeiro Evento"
+  },
+  "Footer": {
+    "new": "Novidades",
+    "discover": "Descobrir",
+    "pricing": "Preços",
+    "help": "Ajuda",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "security": "Segurança",
+    "clone": "Clone feito por "
+  },
+  "Welcome": "Bem-vindo à Luma",
+  "SignIn": {
+    "title": "Bem-vindo à Luma",
+    "subtitle": "Por favor, faça login ou cadastre-se abaixo",
+    "emailPlaceholder": "voce@email.com",
+    "phonePlaceholder": "+55 11 96123 4567",
+    "usePhone": "Usar Telefone",
+    "useEmail": "Usar Email",
+    "phoneNumber": "Número de telefone",
+    "continueWith": {
+      "google": "Entrar com Google",
+      "phone": "Continuar com telefone",
+      "email": "Continuar com Email"
+    }
+  },
+  "OTPLogin": {
+    "title": "Código OTP",
+    "subtitle": "Por favor, insira o código OTP enviado ao email informado para entrar.",
+    "resend": "Resend ",
+    "verify": "Submit"
+  },
+  "Settings": {
+    "title": "Configurações",
+    "tabs": {
+      "account": "Conta",
+      "preferences": "Preferências",
+      "payment": "Pagamento"
+    },
+    "account": {
+      "profile": {
+        "title": "Seu perfil",
+        "subtitle": "Escolha como você será exibido como anfitrião ou convidado.",
+        "name": "Nome",
+        "username": "Nome de usuário",
+        "socialLinks": "Links sociais",
+        "socialLinksPlaceholder": {
+          "username": "nome de usuário",
+          "linkedin": "/in/identificador",
+          "website": "Seu site"
+        },
+        "save": "Salvar Alterações"
+      },
+      "emails": {
+        "title": "Emails",
+        "subtitle": "Adicione emails adicionais para receber convites de eventos enviados para esses endereços.",
+        "addEmail": {
+          "button": "Adicionar Email",
+          "title": "Adicionar Email",
+          "subtitle": "Adicione um email adicional para receber convites de eventos enviados para esse endereço.",
+          "label": "Endereço de Email",
+          "placeholder": "voce@email.com",
+          "add": "Adicionar Email"
+        },
+        "main": "Principal",
+        "mainEmailObservation": "Este e-mail será compartilhado com os anfitriões quando você se registrar para os eventos deles.",
+        "emailObservation": "Convites enviados para este email serão vinculados à sua conta Luma.",
+        "tooltip": "Ações",
+        "changeEmail": {
+          "button": "Alterar Email",
+          "title": "Alterar Email",
+          "subtitle": "Altere seu endereço de email principal do Luma. Este email é compartilhado com os anfitriões quando você se inscreve em seus eventos.",
+          "label": "Novo Endereço de Email",
+          "placeholder": "voce@email.com",
+          "update": "Atualizar"
+        },
+        "removeEmail": {
+          "button": "Remover Email",
+          "title": "Remover Email",
+          "subtitleP1": "Tem certeza de que deseja remover ",
+          "subtitleP2": " da sua conta?",
+          "cancel": "Cancelar",
+          "remove": "Remover"
+        },
+        "promoteToMain": "Promover para Principal"
+      },
+      "Phone": {
+        "title": "Número de Telefone",
+        "subtitle": "Gerencie o número de telefone que você usa para entrar no Luma e receber atualizações por SMS.",
+        "label": "Telefone",
+        "phonePlaceholder": "+55 11 96123 4567",
+        "securityObservation": "Para sua segurança, enviaremos um código para verificar qualquer alteração no seu número de telefone.",
+        "update": "Atualizar",
+        "tooltip": "Vínculo de número de telefone desativado por conta de custos do uso (observação feita pelo desenvolvedor)."
+      },
+      "PasswordAndSecurity": {
+        "title": "Senha e Segurança",
+        "subtitle": "Proteja sua conta com senha e autenticação de dois fatores.",
+        "accountPassword": "Senha da Conta",
+        "definePassword": "Definir senha",
+        "changePassword": "Alterar senha",
+        "passwordObservation": "Por favor, defina uma senha antes de ativar a autenticação de dois fatores.",
+        "passwordObservationWithEmailSent": "Por favor, siga as instruções no email para finalizar a configuração da sua senha.",
+        "twoFactorAuth": "Autenticação de Dois Fatores",
+        "twoFactorAuthObservation": "Adicione uma camada extra de segurança à sua conta com a autenticação de dois fatores.",
+        "activate2FA": "Ativar 2FA"
+      },
+      "ThirdpartyAccounts": {
+        "title": "Contas de Terceiros",
+        "subtitle": "Vincule suas contas para entrar no Luma e automatizar seus fluxos de trabalho.",
+        "connectedAccount": "Vinculado",
+        "notConnectedAccount": "Não vinculado"
+      },
+      "AccountSync": {
+        "title": "Sincronização de Conta",
+        "calendarSync": "Sincronização de Calendário",
+        "calendarSyncObservation": "Sincronize o seu calendário da Luma com o Google, Outlook ou Apple.",
+        "addiCalSubscription": {
+          "button": "Adicionar assinatura iCal",
+          "title": "Adicionar Assinatura iCal",
+          "subtitle": "Adicione o feed de eventos ao seu aplicativo de calendário para acompanhar novos eventos e atualizações.",
+          "GoogleAgenda": "Google Agenda",
+          "OutlookCalendar": "Calendário do Outlook",
+          "SystemCalendar": "Calendário do Sistema",
+          "CopyURL": "Copiar URL para a área de transferência"
+        },
+        "syncAccountObservation": "Sincronize sua conta Luma com outras plataformas para automatizar seus fluxos de trabalho.",
+        "googleSync": "Sincronizar Contatos com o Google",
+        "googleSyncObservation": "Sincronize seus contatos do Gmail para convidá-los facilmente para seus eventos.",
+        "activateGoogleSync": "Ativar Sincronização"
+      },
+      "ActiveDevices": {
+        "title": "Dispositivos Ativos",
+        "subtitle": "Veja a lista de dispositivos nos quais você está atualmente conectado ao Luma.",
+        "thisDevice": "Este Dispositivo",
+        "removeDevice": {
+          "title": "Sair do Dispositivo",
+          "subtitle": "Você deseja sair deste dispositivo e removê-lo da lista?",
+          "cancel": "Cancelar",
+          "exit": "Sair"
+        }
+      },
+      "DeleteAccount": {
+        "title": "Excluir Conta",
+        "subtitle": "Se você não deseja mais usar o Luma, pode excluir sua conta permanentemente.",
+        "delete": {
+          "button": "Excluir Minha Conta",
+          "title": "Excluir Conta",
+          "subtitle": "Tem certeza de que deseja excluir a conta vinculada a ",
+          "checkbox": "Eu entendo que não poderei recuperar minha conta.",
+          "cancel": "Cancelar",
+          "delete": "Excluir"
+        }
+      }
+    },
+    "preferences": {
+      "exhibition": {
+        "title": "Exibição",
+        "subtitle": "Escolha a inteface Luma desejada.",
+        "systemMode": "Sistema",
+        "lightMode": "Claro",
+        "darkMode": "Escuro",
+        "language": "Idioma",
+        "languageObservation": "Essa demonstração possui somente duas opções de idioma"
+      },
+      "notifications": {
+        "title": "Notificações",
+        "disabled": "Desabilitado",
+        "subtitle": "Escolha como você gostaria de ser notificado sobre atualizações, convites e assinaturas.",
+        "eventsThatYouParticipate": {
+          "title": "Eventos que você participa",
+          "eventInvites": "Convites para Eventos",
+          "eventReminders": "Lembretes de Eventos",
+          "eventTransmissions": "Transmissões de Eventos",
+          "eventUpdates": "Atualizações de Eventos",
+          "feedbackRequests": "Solicitações de Feedback"
+        },
+        "eventsThatYouHost": {
+          "title": "Eventos que você hospeda",
+          "newMembers": "Registro de Convidados",
+          "feedbacks": "Respostas de Feedback"
+        },
+        "calendarsThatYouManage": {
+          "title": "Calendários que você gerencia",
+          "newMembers": "Novos Membros",
+          "eventSubmissions": "Submissões de Eventos"
+        },
+        "luma": {
+          "title": "Luma",
+          "updates": "Atualizações do Produto"
+        },
+        "yourSubscriptions": {
+          "title": "Suas Assinaturas",
+          "discoverPages": "Páginas de Descoberta do Luma",
+          "page": "Página",
+          "calendars": "Calendários",
+          "calendar": "Calendário",
+          "manageSubscriptions": "Gerenciar Assinaturas",
+          "yourSubscriptions": "Suas Assinaturas",
+          "subtitle": "Escolha quais páginas de descoberta do Luma você quer acompanhar e gerencie suas assinaturas de calendário.",
+          "tabs": {
+            "discoverPages": "Páginas de Descoberta",
+            "calendars": "Calendários"
+          },
+          "noPages": {
+            "title": "Sem assinatura de Página de Descoberta",
+            "subtitle": "Você não se inscreveu em nenhuma página de descoberta do Luma"
+          },
+          "noCalendars": {
+            "title": "Sem assinatura de Calendário",
+            "subtitle": "Você não tem assinaturas de calendário ativas."
+          },
+          "discover": "Descobrir Eventos"
+        }
+      }
+    }
+  }
+}

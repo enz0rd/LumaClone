@@ -4,6 +4,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Button } from "../../../ui/button";
 import { Loader2Icon, Rss } from "lucide-react";
 import { ICalAlert } from "./ICalAlert";
+import { useTranslation } from "react-i18next";
 
 export function AccountSync() {
   const [isLoading, setLoading] = useState(false);
@@ -16,11 +17,13 @@ export function AccountSync() {
     console.log("Adding iCal subscription");
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="my-8 pt-8 border-t w-full border-zinc-800">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold dark:text-zinc-50 text-zinc-950">
-          Sincronização de Conta
+         {t("Settings.account.AccountSync.title")}
         </h1>
       </div>
       <div className="mt-4 border dark:border-zinc-800 dark:bg-zinc-900 border-zinc-200 bg-zinc-100 bg-opacity-60 rounded-xl">
@@ -30,11 +33,10 @@ export function AccountSync() {
               <Rss className="text-zinc-500 text-lg self-start mt-1" />
               <div className="flex flex-col justify-between">
                 <div className="flex flex-row gap-2">
-                  <p className="dark:text-zinc-50 text-zinc-950">Sincronização de Calendário</p>
+                  <p className="dark:text-zinc-50 text-zinc-950">{t("Settings.account.AccountSync.calendarSync")}</p>
                 </div>
                 <span className="text-zinc-500 font-semibold text-sm">
-                  Sincronize o seu calendário da Luma com o Google, Outlook ou
-                  Apple.
+                {t("Settings.account.AccountSync.calendarSyncObservation")}
                 </span>
               </div>
             </div>
@@ -50,12 +52,11 @@ export function AccountSync() {
               <div className="flex flex-col justify-between">
                 <div className="flex flex-row gap-2">
                   <p className="dark:text-zinc-50 text-zinc-950">
-                    Sincronizar Contatos com o Google
+                  {t("Settings.account.AccountSync.googleSync")}
                   </p>
                 </div>
                 <span className="text-zinc-500 font-semibold text-sm">
-                  Sincronize seus contatos do Gmail para convidá-los facilmente
-                  para seus eventos.
+                {t("Settings.account.AccountSync.googleSyncObservation")}
                 </span>
               </div>
             </div>
@@ -67,7 +68,7 @@ export function AccountSync() {
               disabled={isLoading}
             >
               <span className="dark:text-zinc-900 text-zinc-100 font-semibold text-sm">
-                Ativar Sincronização
+              {t("Settings.account.AccountSync.activateGoogleSync")}
               </span>
             </Button>
           </div>

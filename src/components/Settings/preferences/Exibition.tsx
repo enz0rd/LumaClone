@@ -10,6 +10,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { TbCircleCheckFilled } from "react-icons/tb";
 import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n"
 
 export function ExibitionSettings() {
   type Theme = {
@@ -24,13 +26,20 @@ export function ExibitionSettings() {
     localStorage.setItem("theme", theme);
   }
 
+  const { t } = useTranslation();
+
+  const handleChangeLanguage = (value: string) => {
+    localStorage.setItem("language", value);
+    i18n.changeLanguage(value);
+  };
+
   return (
     <div className="mt-5 w-full">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-50">Exibição</h1>
+        <h1 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-50">{t("Settings.preferences.exhibition.title")}</h1>
       </div>
       <span className="text-md text-zinc-800 dark:text-zinc-300">
-        Escolha a interface Luma desejada.
+      {t("Settings.preferences.exhibition.subtitle")}
       </span>
       <div className="flex flex-wrap gap-2 mt-5">
         <figure
@@ -47,7 +56,7 @@ export function ExibitionSettings() {
             alt="Display System"
           />
           <div className="group-hover:bg-zinc-200/90 dark:group-hover:bg-zinc-800/90 bg-zinc-300 dark:bg-zinc-800 border-t border-zinc-400 dark:border-zinc-700 px-3 py-2 transition flex flex-row items-center justify-between">
-            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">Sistema</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">{t("Settings.preferences.exhibition.systemMode")}</span>
             {chosenTheme.name === "system" && (
               <TbCircleCheckFilled className="text-zinc-800 dark:text-zinc-50" />
             )}
@@ -67,7 +76,7 @@ export function ExibitionSettings() {
             alt="light theme"
           />
           <div className="group-hover:bg-zinc-200/90 dark:group-hover:bg-zinc-800/90 bg-zinc-300 dark:bg-zinc-800 border-t border-zinc-400 dark:border-zinc-700 px-3 py-2 transition flex flex-row items-center justify-between">
-            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">Claro</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">{t("Settings.preferences.exhibition.lightMode")}</span>
             {chosenTheme.name === "light" && (
               <TbCircleCheckFilled className="text-zinc-800 dark:text-zinc-50" />
             )}
@@ -87,7 +96,7 @@ export function ExibitionSettings() {
             alt="dark theme"
           />
           <div className="group-hover:bg-zinc-200/90 dark:group-hover:bg-zinc-800/90 bg-zinc-300 dark:bg-zinc-800 border-t border-zinc-400 dark:border-zinc-700 px-3 py-2 transition flex flex-row items-center justify-between">
-            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">Escuro</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-50 text-sm">{t("Settings.preferences.exhibition.darkMode")}</span>
             {chosenTheme.name === "dark" && (
               <TbCircleCheckFilled className="text-zinc-800 dark:text-zinc-50" />
             )}
@@ -95,17 +104,17 @@ export function ExibitionSettings() {
         </figure>
       </div>
       <div className="mt-5 w-[15rem] flex flex-col gap-2">
-        <label className="text-zinc-700 dark:text-zinc-300 text-sm font-semibold">Idioma</label>
-        <Select>
+        <label className="text-zinc-700 dark:text-zinc-300 text-sm font-semibold">{t("Settings.preferences.exhibition.language")}</label>
+        <Select onValueChange={handleChangeLanguage} defaultValue={i18n.language}>
           <SelectTrigger className="text-zinc-900 dark:text-zinc-50 bg-zinc-100 dark:bg-zinc-800">
             <SelectValue placeholder="Português (Brasil)" />
           </SelectTrigger>
           <SelectContent className="dark:text-zinc-50 dark:bg-zinc-800 text-zinc-900 bg-zinc-50">
             <SelectItem value="pt-br">Português (Brasil)</SelectItem>
             <SelectItem value="en">English</SelectItem>
-            <SelectItem value="demo">This demo only have 2 languages</SelectItem>
           </SelectContent>
         </Select>
+        <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500">{t("Settings.preferences.exhibition.languageObservation")}</span>
       </div>
     </div>
   );

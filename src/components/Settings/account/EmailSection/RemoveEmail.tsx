@@ -12,6 +12,7 @@ import {
 import { Button } from "../../../ui/button";
 import { Loader2Icon, X } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function RemoveEmailButton({ email, onRemoveEmail }: { email: string, onRemoveEmail: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +29,8 @@ export function RemoveEmailButton({ email, onRemoveEmail }: { email: string, onR
     console.log("Removing email", email);
   };
 
+  const { t } = useTranslation();
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
@@ -37,7 +40,7 @@ export function RemoveEmailButton({ email, onRemoveEmail }: { email: string, onR
           flex gap-2 py-2 text-sm px-3 rounded-lg items-center"
         >
           <FaTrash size={15} />
-          <span className="dark:text-zinc-400 text-zinc-600">Remover Email</span>
+          <span className="dark:text-zinc-400 text-zinc-600">{t("Settings.account.emails.removeEmail.button")}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[90%] max-w-[22rem] rounded-2xl 
@@ -56,12 +59,11 @@ export function RemoveEmailButton({ email, onRemoveEmail }: { email: string, onR
         </div>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-xl text-start">
-            Remover Email
+          {t("Settings.account.emails.removeEmail.title")}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription className="text-md dark:text-zinc-300 text-zinc-700 text-sm font-medium">
-            Tem certeza de que deseja remover <strong>{email}</strong> da sua
-            conta?
+        {t("Settings.account.emails.removeEmail.subtitleP1")} <strong>{email}</strong> {t("Settings.account.emails.removeEmail.subtitleP2")}
         </AlertDialogDescription>
           <div className="flex flex-row w-full gap-4 mt-5 justify-between items-center">
             <Button
@@ -71,13 +73,13 @@ export function RemoveEmailButton({ email, onRemoveEmail }: { email: string, onR
             >
               {isLoading ? (
                 <Loader2Icon className="animate-spin h-5 w-5" />
-              ) : ("Remover")}
+              ) : t("Settings.account.emails.removeEmail.remove")}
             </Button>
             <AlertDialogCancel asChild className="border-none m-0">
               <Button className="dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-800 dark:hover:bg-zinc-300 
               bg-zinc-200 text-zinc-700 hover:text-zinc-200 hover:bg-zinc-700
               w-full border-none text-base">
-                Cancelar
+                {t("Settings.account.emails.removeEmail.cancel")}
               </Button>
             </AlertDialogCancel>
           </div>

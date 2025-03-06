@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, Mail, PencilLine, Plus, X } from "lucide-react";
 import { Input } from "../../../ui/input";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const EmailSchema = z.object({
   email: z
@@ -58,6 +59,7 @@ export function ChangeEmail({
     // onAddEmail();
   };
 
+  const { t } = useTranslation();
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -68,7 +70,7 @@ export function ChangeEmail({
           transition flex items-center gap-2 py-2 text-sm px-3 rounded-lg"
         >
           <PencilLine className="h-4 w-4" />
-          <span className="text-zinc-900 dark:text-zinc-100">Alterar Email</span>
+          <span className="text-zinc-900 dark:text-zinc-100">{t("Settings.account.emails.changeEmail.button")}</span>
         </button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[90%] max-w-[20rem] rounded-2xl 
@@ -88,14 +90,12 @@ export function ChangeEmail({
         </div>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-xl text-start">
-            Alterar Email
+          {t("Settings.account.emails.changeEmail.title")}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
         <span className="text-md text-zinc-700 dark:text-zinc-300 mb-3 text-sm font-medium">
-            Altere seu endereço de email principal do Luma. Este email é
-            compartilhado com os anfitriões quando você se inscreve em seus
-            eventos.
+        {t("Settings.account.emails.changeEmail.subtitle")}
           </span>
         </AlertDialogDescription>
         <form
@@ -103,11 +103,11 @@ export function ChangeEmail({
           className="flex flex-col gap-2"
         >
           <label htmlFor="email" className="text-sm dark:text-zinc-200 text-zinc-800">
-            Novo Endereço de Email
+          {t("Settings.account.emails.changeEmail.label")}
           </label>
           <Input
             type="email"
-            placeholder="voce@email.com"
+            placeholder={t("Settings.account.emails.changeEmail.placeholder")}
             autoFocus
             className="font-medium text-base dark:border-zinc-800 dark:hover:border-zinc-300 dark:focus-visible:border-zinc-50 
             border-zinc-200 hover:border-zinc-700 focus-visible:border-zinc-950
@@ -130,7 +130,7 @@ export function ChangeEmail({
             {isLoading ? (
               <Loader2Icon className="animate-spin h-5 w-5" />
             ) : (
-              "Atualizar"
+             t("Settings.account.emails.changeEmail.update")
             )}
           </Button>
         </form>

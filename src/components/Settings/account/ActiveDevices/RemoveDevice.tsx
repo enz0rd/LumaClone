@@ -13,6 +13,7 @@ import { Button } from "../../../ui/button";
 import { Loader2Icon, ScreenShareOff, X } from "lucide-react";
 import { useState } from "react";
 import { IoRemoveCircleOutline } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 export function RemoveDevice({
   device,
@@ -35,6 +36,8 @@ export function RemoveDevice({
     console.log("Removing device", device);
   };
 
+  const { t } = useTranslation();
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
@@ -54,11 +57,11 @@ export function RemoveDevice({
         </div>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-xl text-start">
-            Sair do Dispositivo
+          {t("Settings.account.ActiveDevices.removeDevice.title")}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription className="text-md dark:text-zinc-300 text-zinc-700 text-sm font-medium">
-          Tem certeza de que deseja sair desde dispositivo e removê-lo da lista?
+        {t("Settings.account.ActiveDevices.removeDevice.subtitle")}
         </AlertDialogDescription>
         <div className="flex flex-row w-full gap-4 justify-between items-center">
           <Button
@@ -69,13 +72,13 @@ export function RemoveDevice({
             {isLoading ? (
               <Loader2Icon className="animate-spin h-5 w-5" />
             ) : (
-              "Sair"
+              t("Settings.account.ActiveDevices.removeDevice.exit")
             )}
           </Button>
           <AlertDialogCancel asChild className="border-none m-0">
             <Button className="dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-800 dark:hover:bg-zinc-300 
             bg-zinc-200 text-zinc-700 hover:text-zinc-200 hover:bg-zinc-700 w-full border-none text-base">
-              Cancelar
+              {t("Settings.account.ActiveDevices.removeDevice.cancel")}
             </Button>
           </AlertDialogCancel>
         </div>

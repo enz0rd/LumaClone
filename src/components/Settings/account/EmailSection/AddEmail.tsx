@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, Mail, Plus, X } from "lucide-react";
 import { Input } from "../../../ui/input";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const EmailSchema = z.object({
   email: z
@@ -55,6 +56,8 @@ export function AddEmail({
     }, 2000);
   };
 
+  const { t } = useTranslation();
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
@@ -64,7 +67,7 @@ export function AddEmail({
           transition flex items-center gap-2 py-[.2rem] text-sm font-semibold px-2 rounded-lg"
         >
           <Plus className="h-4 w-4" />
-          <span>Adicionar Email</span>
+          <span>{t("Settings.account.emails.addEmail.button")}</span>
         </button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[90%] max-w-[20rem] rounded-2xl border-none visible z-[999]
@@ -82,13 +85,12 @@ export function AddEmail({
         </div>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-xl text-start">
-            Adicionar Email
+          {t("Settings.account.emails.addEmail.title")}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
           <span className="text-md dark:text-zinc-300 text-zinc-700 mb-3 text-sm font-medium">
-            Adicione um email adicional para receber convites de eventos
-            enviados para esse endereço.
+          {t("Settings.account.emails.addEmail.subtitle")}
           </span>
         </AlertDialogDescription>
         <form
@@ -96,11 +98,11 @@ export function AddEmail({
           className="flex flex-col gap-2"
         >
           <label htmlFor="email" className="text-sm dark:text-zinc-200 text-zinc-800">
-            Endereço de Email
+          {t("Settings.account.emails.addEmail.label")}
           </label>
           <Input
             type="email"
-            placeholder="voce@email.com"
+            placeholder={t("Settings.account.emails.addEmail.placeholder")}
             className="font-medium text-base transition
             dark:border-zinc-800 dark:hover:border-zinc-300 dark:focus-visible:border-zinc-50
             border-zinc-200 hover:border-zinc-700 focus-visible:border-zinc-950"
@@ -119,7 +121,7 @@ export function AddEmail({
             {isLoading ? (
               <Loader2Icon className="animate-spin h-5 w-5" />
             ) : (
-              "Adicionar Email"
+              t("Settings.account.emails.addEmail.add")
             )}
           </Button>
         </form>

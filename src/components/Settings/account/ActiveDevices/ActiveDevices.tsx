@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsPhone } from "react-icons/bs";
 import { FaDesktop } from "react-icons/fa";
 import { RemoveDevice } from "./RemoveDevice";
+import { useTranslation } from "react-i18next";
 
 type Devices = {
     browser: string;
@@ -32,13 +33,15 @@ const devicesPlaceholder = [
 export function ActiveDevices() {
     const [devices, setDevices] = useState<Devices[]>(devicesPlaceholder);
 
+    const { t } = useTranslation();
+
     return (
         <div className="my-8 pt-8 border-t w-full dark:border-zinc-800 border-zinc-200">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold dark:text-zinc-50 text-zinc-950">Dispositivos Ativos</h1>
+            <h1 className="text-2xl font-semibold dark:text-zinc-50 text-zinc-950">{t("Settings.account.ActiveDevices.title")}</h1>
           </div>
           <span className="text-md dark:text-zinc-300 text-zinc-700">
-            Veja a lista de dispositivos nos quais você está atualmente conectado ao Luma.
+          {t("Settings.account.ActiveDevices.subtitle")}
           </span>
           <div className="mt-4 border dark:border-zinc-800 dark:bg-zinc-900 border-zinc-200 bg-zinc-100 bg-opacity-60 rounded-xl">
             {devices.map((record, index) => (
@@ -57,7 +60,7 @@ export function ActiveDevices() {
                       <p className="dark:text-zinc-50 text-zinc-950">{record.browser} no {record.os}</p>
                       {record.isCurrent && (
                         <span className="dark:text-lime-500 dark:bg-lime-900/40 text-lime-500 bg-lime-100/40 rounded-xl text-xs font-bold px-2 py-1">
-                          Este Dispositivo
+                          {t("Settings.account.ActiveDevices.thisDevice")}
                         </span>
                       )}
                     </div>

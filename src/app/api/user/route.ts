@@ -1,6 +1,5 @@
 import { JwtTokenPayloadStructure } from './../auth/generate-token/route';
 import { db } from "@/lib/db";
-import { jwtDecrypt } from "jose";
 import { NextResponse } from "next/server";
 import { DecryptToken } from "../auth/generate-token/route";
 

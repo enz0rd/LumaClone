@@ -13,6 +13,7 @@ import {
 import { Globe, UserCheck2 } from "lucide-react";
 import { UserImageUploadInput } from "./UserImageUploadInput";
 import { Button } from "../../ui/button";
+import { useTranslation } from "react-i18next";
 
 const UserFormSchema = z.object({
   name: z.string().nonempty({
@@ -47,11 +48,13 @@ export function AccountSettingsForm() {
     console.log(data);
   }
 
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-2 mt-5">
-      <h1 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-50">Seu perfil</h1>
+      <h1 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-50">{t("Settings.account.profile.title")}</h1>
       <span className="text-md text-zinc-700 dark:text-zinc-300">
-        Escolha como você será exibido como anfitrião ou convidado.
+        {t("Settings.account.profile.subtitle")}
       </span>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:space-x-8">
@@ -61,7 +64,7 @@ export function AccountSettingsForm() {
                 htmlFor="name"
                 className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm"
               >
-                Nome
+                {t("Settings.account.profile.name")}
               </label>
               <Input
                 type="text"
@@ -81,7 +84,7 @@ export function AccountSettingsForm() {
                 htmlFor="username"
                 className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm"
               >
-                Nome de usuário
+                {t("Settings.account.profile.username")}
               </label>
               <div className="flex items-center">
                 <div className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm px-4 flex my-auto h-full 
@@ -131,7 +134,7 @@ export function AccountSettingsForm() {
         </div>
         <div className="flex flex-col gap-2 mt-5">
           <label htmlFor="bio" className="text-zinc-700 dark:text-zinc-300 font-semibold text-sm">
-            Links Sociais
+          {t("Settings.account.profile.socialLinks")}
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-3 gap-4 w-fit">
             <div className="flex items-center gap-3">
@@ -146,7 +149,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="instagram"
                   {...register("social.instagram")}
-                  placeholder="nome de usuário"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.username")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -166,7 +169,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="twitter"
                   {...register("social.twitter")}
-                  placeholder="nome de usuário"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.username")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -186,7 +189,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="youtube"
                   {...register("social.youtube")}
-                  placeholder="nome de usuário"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.username")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -206,7 +209,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="tiktok"
                   {...register("social.tiktok")}
-                  placeholder="nome de usuário"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.username")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -226,7 +229,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="linkedin"
                   {...register("social.linkedin")}
-                  placeholder="/in/identificador"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.linkedin")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -241,7 +244,7 @@ export function AccountSettingsForm() {
                   type="text"
                   id="website"
                   {...register("social.website")}
-                  placeholder="Seu site"
+                  placeholder={t("Settings.account.profile.socialLinksPlaceholder.website")}
                   className="transition 
                   dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50 
                   hover:border-zinc-600 focus-visible:border-zinc-950 border-zinc-300 text-zinc-950 
@@ -256,7 +259,7 @@ export function AccountSettingsForm() {
           " >
             <UserCheck2 size={20} className="dark:text-zinc-800 text-zinc-200" />
             <span className="dark:text-zinc-800 text-zinc-200 font-medium text-base">
-              Salvar alterações
+            {t("Settings.account.profile.save")}
             </span>
           </Button>
         </div>

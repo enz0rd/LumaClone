@@ -1,0 +1,239 @@
+{
+  "Header": {
+    "nav": {
+      "events": "Events",
+      "calendars": "Calendars",
+      "discover": "Discover"
+    },
+    "createEvent": "Create Event",
+    "explore": "Explore",
+    "signin": "Sign In",
+    "UserDropdown": {
+      "seeProfile": "View Profile",
+      "settings": "Settings",
+      "signout": "Sign Out"
+    }
+  },
+  "landingPage": {
+    "enchantingEvents": "Enchanting Events",
+    "startHere": "start here",
+    "p": "Create an event page, invite friends, and sell tickets. Host a memorable event today.",
+    "createEvent": "Create Your First Event"
+  },
+  "Footer": {
+    "new": "What's New",
+    "discover": "Discover",
+    "pricing": "Pricing",
+    "help": "Help",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "security": "Security",
+    "clone": "Clone made by "
+  },
+  "Welcome": "Welcome to Luma",
+  "SignIn": {
+    "title": "Welcome to Luma",
+    "subtitle": "Please sign in or register below",
+    "emailPlaceholder": "you@email.com",
+    "phonePlaceholder": "+1 123 456 7890",
+    "usePhone": "Use Phone",
+    "useEmail": "Use Email",
+    "phoneNumber": "Phone Number",
+    "continueWith": {
+      "google": "Continue with Google",
+      "phone": "Continue with Phone",
+      "email": "Continue with Email"
+    }
+  },
+  "OTPLogin": {
+    "title": "OTP Code",
+    "subtitle": "Please enter the OTP code sent to the provided email to sign in.",
+    "resend": "Resend ",
+    "verify": "Submit"
+  },
+  "Settings": {
+    "title": "Settings",
+    "tabs": {
+      "account": "Account",
+      "preferences": "Preferences",
+      "payment": "Payment"
+    },
+    "account": {
+      "profile": {
+        "title": "Your Profile",
+        "subtitle": "Choose how you will be displayed as a host or guest.",
+        "name": "Name",
+        "username": "Username",
+        "socialLinks": "Social Links",
+        "socialLinksPlaceholder": {
+          "username": "username",
+          "linkedin": "/in/identifier",
+          "website": "Your website"
+        },
+        "save": "Save Changes"
+      },
+      "emails": {
+        "title": "Emails",
+        "subtitle": "Add additional emails to receive event invitations sent to these addresses.",
+        "addEmail": {
+          "button": "Add Email",
+          "title": "Add Email",
+          "subtitle": "Add an additional email to receive event invitations sent to this address.",
+          "label": "Email Address",
+          "placeholder": "you@email.com",
+          "add": "Add Email"
+        },
+        "main": "Main",
+        "mainEmailObservation": "This email will be shared with hosts when you register for their events.",
+        "emailObservation": "Invitations sent to this email will be linked to your Luma account.",
+        "tooltip": "Actions",
+        "changeEmail": {
+          "button": "Change Email",
+          "title": "Change Email",
+          "subtitle": "Change your primary Luma email address. This email is shared with hosts when you register for their events.",
+          "label": "New Email Address",
+          "placeholder": "you@email.com",
+          "update": "Update"
+        },
+        "removeEmail": {
+          "button": "Remove Email",
+          "title": "Remove Email",
+          "subtitleP1": "Are you sure you want to remove ",
+          "subtitleP2": " from your account?",
+          "cancel": "Cancel",
+          "remove": "Remove"
+        },
+        "promoteToMain": "Promote to Main"
+      },
+      "Phone": {
+        "title": "Phone Number",
+        "subtitle": "Manage the phone number you use to sign in to Luma and receive SMS updates.",
+        "label": "Phone",
+        "phonePlaceholder": "+1 123 456 7890",
+        "securityObservation": "For your security, we will send a code to verify any changes to your phone number.",
+        "update": "Update",
+        "tooltip": "Phone number linking disabled due to usage costs (note made by developer)."
+      },
+      "PasswordAndSecurity": {
+        "title": "Password and Security",
+        "subtitle": "Protect your account with a password and two-factor authentication.",
+        "accountPassword": "Account Password",
+        "definePassword": "Set Password",
+        "changePassword": "Change Password",
+        "passwordObservation": "Please set a password before enabling two-factor authentication.",
+        "passwordObservationWithEmailSent": "Please follow the instructions in the email to complete your password setup.",
+        "twoFactorAuth": "Two-Factor Authentication",
+        "twoFactorAuthObservation": "Add an extra layer of security to your account with two-factor authentication.",
+        "activate2FA": "Activate 2FA"
+      },
+      "ThirdpartyAccounts": {
+        "title": "Third-Party Accounts",
+        "subtitle": "Link your accounts to sign in to Luma and automate your workflows.",
+        "connectedAccount": "Connected",
+        "notConnectedAccount": "Not Connected"
+      },
+      "AccountSync": {
+        "title": "Account Sync",
+        "calendarSync": "Calendar Sync",
+        "calendarSyncObservation": "Sync your Luma calendar with Google, Outlook, or Apple.",
+        "addiCalSubscription": {
+          "button": "Add iCal Subscription",
+          "title": "Add iCal Subscription",
+          "subtitle": "Add the event feed to your calendar app to keep track of new events and updates.",
+          "GoogleAgenda": "Google Calendar",
+          "OutlookCalendar": "Outlook Calendar",
+          "SystemCalendar": "System Calendar",
+          "CopyURL": "Copy URL to Clipboard"
+        },
+        "syncAccountObservation": "Sync your Luma account with other platforms to automate your workflows.",
+        "googleSync": "Sync Contacts with Google",
+        "googleSyncObservation": "Sync your Gmail contacts to easily invite them to your events.",
+        "activateGoogleSync": "Activate Sync"
+      },
+      "ActiveDevices": {
+        "title": "Active Devices",
+        "subtitle": "View the list of devices you are currently signed in to Luma on.",
+        "thisDevice": "This Device",
+        "removeDevice": {
+          "title": "Sign Out from Device",
+          "subtitle": "Do you want to sign out from this device and remove it from the list?",
+          "cancel": "Cancel",
+          "exit": "Sign Out"
+        }
+      },
+      "DeleteAccount": {
+        "title": "Delete Account",
+        "subtitle": "If you no longer wish to use Luma, you can permanently delete your account.",
+        "delete": {
+          "button": "Delete My Account",
+          "title": "Delete Account",
+          "subtitle": "Are you sure you want to delete the account linked to ",
+          "checkbox": "I understand that I will not be able to recover my account.",
+          "cancel": "Cancel",
+          "delete": "Delete"
+        }
+      }
+    },
+    "preferences": {
+      "exhibition": {
+        "title": "Display",
+        "subtitle": "Choose your preferred Luma interface.",
+        "systemMode": "System",
+        "lightMode": "Light",
+        "darkMode": "Dark",
+        "language": "Language",
+        "languageObservation": "This demo only has two language options"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "subtitle": "Choose how you would like to be notified about updates, invitations, and subscriptions.",
+        "disabled": "Disabled",
+        "eventsThatYouParticipate": {
+          "title": "Events you participate in",
+          "eventInvites": "Event Invitations",
+          "eventReminders": "Event Reminders",
+          "eventTransmissions": "Event Transmissions",
+          "eventUpdates": "Event Updates",
+          "feedbackRequests": "Feedback Requests"
+        },
+        "eventsThatYouHost": {
+          "title": "Events you host",
+          "newMembers": "Guest Registrations",
+          "feedbacks": "Feedback Responses"
+        },
+        "calendarsThatYouManage": {
+          "title": "Calendars you manage",
+          "newMembers": "New Members",
+          "eventSubmissions": "Event Submissions"
+        },
+        "luma": {
+          "title": "Luma",
+          "updates": "Product Updates"
+        },
+        "yourSubscriptions": {
+          "title": "Your Subscriptions",
+          "discoverPages": "Luma Discover Pages",
+          "page": "Page",
+          "calendars": "Calendars",
+          "calendar": "Calendar",
+          "manageSubscriptions": "Manage Subscriptions",
+          "yourSubscriptions": "Your Subscriptions",
+          "subtitle": "Choose which Luma discovery pages you want to follow and manage your calendar subscriptions.",
+          "tabs": {
+            "discoverPages": "Discover Pages",
+            "calendars": "Calendars"
+          },
+          "noPages": {
+            "title": "No Discover Pages",
+            "subtitle": "You are not following any Luma discovery pages yet."
+          },
+          "noCalendars": {
+            "title": "No Calendars",
+            "subtitle": "You are not subscribed to any calendars yet."
+          },
+          "discover": "Discover Events"
+        }
+      }
+    }
+  }
+}

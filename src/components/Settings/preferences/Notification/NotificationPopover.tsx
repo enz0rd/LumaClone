@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type NotificationOption = {
   icon: React.ReactNode;
@@ -23,6 +24,8 @@ interface NotificationPopoverProps {
 export function NotificationPopover({ content, index, totalCount }: NotificationPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState("email");
+
+  const { t } = useTranslation();
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -60,7 +63,7 @@ export function NotificationPopover({ content, index, totalCount }: Notification
             setIsOpen(false);
           }}
         >
-          <span className="w-full text-start">Desabilitado</span>
+          <span className="w-full text-start">{t("Settings.preferences.notifications.disabled")}</span>
         </Button>
         <hr />
         {content.options.map((option, idx) => (
