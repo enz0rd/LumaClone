@@ -35,6 +35,10 @@ EMAIL_SERVER_PORT=*smtp port*
 EMAIL_SERVER_USER="*smtp email*"
 EMAIL_SERVER_PASSWORD="*smtp email password*"
 ```
+Migrate the database using prisma:
+```bash
+npx prisma migrate dev --name init
+```
 Finally, run the project using:
 ```bash
 npm run dev
