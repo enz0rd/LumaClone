@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ status: 400, message: "OTP code not found" });
     }
 
-    if(checkOtp.code !== body.code) {
+    if((new Date(checkOtp.createdAt).getTime() - Date.now()) > ( 15 * 60 * 1000 ) || checkOtp.code !== body.code) {
         return NextResponse.json({ status: 400, message: "Invalid OTP code" });
     }
 

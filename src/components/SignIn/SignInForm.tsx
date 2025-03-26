@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2Icon, Mail, SmartphoneIcon } from "lucide-react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignInSchema = z.object({
   email: z.string().email({
@@ -22,7 +23,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ErrorModal, ErrorModalProps } from "../Error/ErrorModal";
 import { api } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
@@ -81,22 +81,12 @@ export function SignInForm() {
         router.push("/verifyAccount");
         return;
       } else if (respData.slug == "server-error") {
-        setErrorContent({
-          title: "Erro no servidor",
-          message: "Ocorreu um erro no servidor, tente novamente mais tarde.",
-          onClose: () => setIsErrorVisible(false),
-        });
-        setIsErrorVisible(true);
+        toast.error("Ocorreu um erro no servidor, tente novamente mais tarde.");
         console.log(respData.message);
         setIsLoading(false);
         return;
       } else {
-        setErrorContent({
-          title: "Erro desconhecido",
-          message: "Ocorreu um erro desconhecido, tente novamente mais tarde.",
-          onClose: () => setIsErrorVisible(false),
-        });
-        setIsErrorVisible(true);
+        toast.error("Ocorreu um erro desconhecido, tente novamente mais tarde.");
         console.log(respData.message);
         setIsLoading(false);
         return;
@@ -117,23 +107,9 @@ export function SignInForm() {
   };
 
   const [method, setMethod] = useState<"email" | "phone">("email");
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
-  const [errorContent, setErrorContent] = useState<ErrorModalProps>({
-    title: "",
-    message: "",
-    onClose: () => setIsErrorVisible(false),
-  });
   return (
     <div className="mt-2">
-      {isErrorVisible && (
-        <>
-          <ErrorModal
-            title={errorContent.title}
-            message={errorContent.message}
-            onClose={errorContent.onClose}
-          />
-        </>
-      )}
+      <Toaster position="top-center" />
       <div className="flex flex-col gap-2">
         {method === "email" ? (
           <form

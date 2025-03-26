@@ -5,12 +5,14 @@ import { SettingsForm } from "@/components/Settings/SettingsForm";
 import { api } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
     const [isSignedIn, setIsSignedIn] = useState(false);
-    
-    document.title = "Configurações ∙ Luma";
 
+    const { t } = useTranslation();
+    document.title = t("titles.accountSettings");
+    
     const router = useRouter();
 
     useEffect(() => {

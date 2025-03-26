@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     // check if user exists
     const existingUserEmail = await db.userEmails.findUnique({
       where: { email: body.email },
-    }) ;
+    });
 
     
     if (existingUserEmail) {

@@ -5,9 +5,11 @@ import { CreateUsernameForm } from "@/components/SignIn/CreateUsernameForm";
 import { Welcome } from "@/components/Welcome/Welcome";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
-    document.title = "Finalize o cadastro ∙ Luma";
+    const { t } = useTranslation();
+    document.title = t("titles.finishSignUp");
     const [welcome, setWelcome] = useState(false);
     
     const router = useRouter();

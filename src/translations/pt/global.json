@@ -1,4 +1,15 @@
 {
+  "titles": {
+    "home": "Luma ∙ Eventos encantadores começam aqui",
+    "signin": "Entrar ∙ Luma",
+    "verifyAccount": "Verifique sua conta ∙ Luma",
+    "finishSignUp": "Finalize o cadastro ∙ Luma",
+    "homeAuthenticated": "Início ∙ Luma",
+    "accountSettings": "Configurações da Conta ∙ Luma",
+    "preferencesSettings": "Preferências ∙ Luma",
+    "paymentSettings": "Configurações de Pagamento ∙ Luma",
+    "createEvent": "Criar Evento ∙ Luma"
+  },
   "Header": {
     "nav": {
       "events": "Eventos",
@@ -64,6 +75,7 @@
         "subtitle": "Escolha como você será exibido como anfitrião ou convidado.",
         "name": "Nome",
         "username": "Nome de usuário",
+        "bioPlaceholder": "Compartilhe um pouco sobre seu histórico e interesses",
         "socialLinks": "Links sociais",
         "socialLinksPlaceholder": {
           "username": "nome de usuário",

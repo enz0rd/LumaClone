@@ -4,7 +4,8 @@ import { ArrowUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { api } from "@/lib/utils";
-import { ErrorModal } from "@/components/Error/ErrorModal";
+import toast, { Toaster } from "react-hot-toast";
+import { ToastTypes } from "@/components/ToastTypes";
 
 type ImagePreview = {
   image: string;
@@ -13,10 +14,6 @@ type ImagePreview = {
 
 export function UserImageUploadInput() {
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
-
-  type Error = { message: string; title: string };
-
-  const [error, setError] = useState<Error>();
 
   useEffect(() => {
     const userImage = localStorage.getItem("userImage");
@@ -38,10 +35,7 @@ export function UserImageUploadInput() {
     if (file && ["image/png", "image/jpeg"].includes(file.type)) {
       if (file.size > 5 * 1024 * 1024) {
         console.log("Arquivo muito grande. Tamanho máximo: 5MB");
-        setError({
-          message: "Arquivo muito grande. Tamanho máximo: 5MB",
-          title: "Tamanho excedido",
-        });
+        toast("Arquivo muito grande. Tamanho máximo: 5MB", ToastTypes.error);
         return;
       }
       const formData = new FormData();
@@ -58,23 +52,14 @@ export function UserImageUploadInput() {
       });
       localStorage.setItem('userImage', resp.data.url)
     } else {
-      setError({
-        message:
-          "O arquivo selecionado é inválido. Formatos suportados: PNG e JPG.",
-        title: "Arquivo Inválido",
-      });
+      toast("O arquivo selecionado é inválido. Formatos suportados: PNG e JPG.", ToastTypes.error);
       console.log("Arquivo inválido");
     }
   };
 
   return (
     <div className="flex flex-col gap-2">
-      {error && (
-        <ErrorModal
-          message={error.message}
-          title={error.title}
-        />
-      )}
+      <Toaster position="bottom-center" />
       <span className="dark:text-zinc-300 text-zinc-700 font-semibold text-sm">
         Foto de Perfil
       </span>

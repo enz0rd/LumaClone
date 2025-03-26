@@ -12,7 +12,7 @@ export function SignIn() {
       <div className="m-auto flex justify-center">
         <motion.div 
             initial={{ scaleX: 0, width: 0, scaleY: 0 }}
-            animate={{ scaleX: 1, width: "auto", scaleY: 1 }}
+            animate={{ scaleX: 1, width: 350, scaleY: 1 }}
             transition={{ duration: 0.5 }}
             className="border-[.075rem] dark:border-zinc-700 dark:bg-zinc-900 border-zinc-300 bg-zinc-100 bg-opacity-[65%] backdrop-blur-5 rounded-3xl">
           <div className="p-6 flex flex-col gap-3 text-left ">

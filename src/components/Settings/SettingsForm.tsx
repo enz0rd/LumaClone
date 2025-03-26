@@ -29,13 +29,13 @@ export function SettingsForm() {
   const handleChangeTab = (tab: string) => {
     switch (tab) {
       case "account":
-        document.title = "Configurações da Conta ∙ Luma"
+        document.title = t("titles.accountSettings");
         break;
       case "preferences":
-        document.title = "Preferências ∙ Luma"
+        document.title = t("titles.preferencesSettings");
         break;
       case "payment":
-        document.title = "Configurações de Pagamento ∙ Luma"
+        document.title = t("titles.paymentSettings");
         break;
     }
     return setActiveTab(tab);

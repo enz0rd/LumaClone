@@ -6,9 +6,13 @@ import OtpLogin from "@/components/SignIn/OtpLogin";
 import { Welcome } from "@/components/Welcome/Welcome";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
-  document.title = "Verifique sua conta ∙ Luma";
+  const { t } = useTranslation();
+
+  document.title = t("titles.verifyAccount");
+
   const [welcome, setWelcome] = useState(false);
 
   const router = useRouter();

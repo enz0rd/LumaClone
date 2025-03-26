@@ -1,8 +1,11 @@
+'use client'
 import { RandomBg } from "@/components/Background/RandomBg"
 import { Header } from "@/components/Header"
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
-    document.title = "Home ∙ Luma";
+    const { t } = useTranslation();
+    document.title = t("titles.homeAuthenticated");
     return (
         <>
             <RandomBg />

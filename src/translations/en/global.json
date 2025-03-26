@@ -1,4 +1,15 @@
 {
+  "titles": {
+    "home": "Luma ∙ Enchanting events start here",
+    "signin": "Sign In ∙ Luma",
+    "verifyAccount": "Verify your account ∙ Luma",
+    "finishSignUp": "Finish signing up ∙ Luma",
+    "homeAuthenticated": "Home ∙ Luma",
+    "accountSettings": "Account Settings ∙ Luma",
+    "preferencesSettings": "Preferences ∙ Luma",
+    "paymentSettings": "Payment Settings ∙ Luma",
+    "createEvent": "Create event ∙ Luma"
+  },
   "Header": {
     "nav": {
       "events": "Events",
@@ -64,6 +75,7 @@
         "subtitle": "Choose how you will be displayed as a host or guest.",
         "name": "Name",
         "username": "Username",
+        "bioPlaceholder": "Share a bit about your interests, work, or hobbies.",
         "socialLinks": "Social Links",
         "socialLinksPlaceholder": {
           "username": "username",

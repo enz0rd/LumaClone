@@ -6,9 +6,11 @@ import { Welcome } from "@/components/Welcome/Welcome";
 import { api } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
-  document.title = "Criar evento ∙ Luma";
+  const { t } = useTranslation();
+  document.title = t("titles.createEvent");
 
   const router = useRouter();
 

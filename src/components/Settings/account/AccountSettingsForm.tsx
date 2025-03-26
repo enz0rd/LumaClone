@@ -10,10 +10,12 @@ import {
   BsTwitterX,
   BsYoutube,
 } from "react-icons/bs";
-import { Globe, UserCheck2 } from "lucide-react";
+import { CheckCircle2, Globe, UserCheck2 } from "lucide-react";
 import { UserImageUploadInput } from "./UserImageUploadInput";
 import { Button } from "../../ui/button";
 import { useTranslation } from "react-i18next";
+import toast, { Toaster } from "react-hot-toast"
+import { ToastTypes } from "@/components/ToastTypes";
 
 const UserFormSchema = z.object({
   name: z.string().nonempty({
@@ -45,6 +47,7 @@ export function AccountSettingsForm() {
   });
 
   async function onSubmit(data: UserForm) {
+    toast("Teste", ToastTypes.default);
     console.log(data);
   }
 
@@ -121,7 +124,7 @@ export function AccountSettingsForm() {
                           dark:hover:border-zinc-400 dark:focus-visible:border-zinc-50 dark:border-zinc-700 dark:text-zinc-50
                             text-wrap placeholder:font-semibold placeholder:text-base
                             min-h-[5rem] rounded-lg"
-                placeholder="Compartilhe um pouco sobre seu histórico e interesses"
+                placeholder={t("Settings.account.profile.bioPlaceholder")}
               />
               {errors.bio && (
                 <span className="text-red-500 text-xs">
@@ -255,13 +258,13 @@ export function AccountSettingsForm() {
           </div>
           <Button className="mt-5 w-fit
           dark:bg-zinc-50 dark:hover:bg-zinc-300 
-          bg-zinc-950 hover:bg-zinc-700 
-          " >
+          bg-zinc-950 hover:bg-zinc-700 " >
             <UserCheck2 size={20} className="dark:text-zinc-800 text-zinc-200" />
             <span className="dark:text-zinc-800 text-zinc-200 font-medium text-base">
             {t("Settings.account.profile.save")}
             </span>
           </Button>
+          <Toaster position="bottom-center" />
         </div>
       </form>
     </div>

@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import toast, { Toaster } from "react-hot-toast";
+import { ToastTypes } from "../ToastTypes";
 
 const OtpLoginSchema = z.object({
   otp: z.string().length(6, {
@@ -38,10 +40,8 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [errorResponse, setErrorResponse] = useState("");
   const onSubmit = async (data: OtpLoginData) => {
     try {
-      setErrorResponse("");
       setIsLoading(true);
       const resp = await axios.post("/api/auth/verify-otp", {
         userId: localStorage.getItem("userId"),
@@ -63,10 +63,10 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
         setWelcome(true);
       } else {
         setIsLoading(false);
-        setErrorResponse(resp.data.message);
+        toast(resp.data.message, ToastTypes.error);
       }
     } catch (error) {
-      setErrorResponse("Erro ao enviar código OTP.");
+      toast("Erro ao enviar código OTP.", ToastTypes.error);
       setIsLoading(false);
       console.log(error);
     }
@@ -156,9 +156,6 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
                     {errors.otp.message}
                   </p>
                 )}
-                {errorResponse && (
-                  <p className="text-red-500 text-sm mt-1">{errorResponse}</p>
-                )}
               </div>
               <div className="flex flex-row mt-2 justify-between items-center">
                 <Button
@@ -188,6 +185,7 @@ function OtpLogin({ setWelcome }: { setWelcome: (value: boolean) => void }) {
           </div>
         </motion.div>
       </div>
+      <Toaster position="bottom-center" />
     </div>
   );
 }
