@@ -246,6 +246,39 @@
           "discover": "Descobrir Eventos"
         }
       }
+    },
+    "payment": {
+      "methods": {
+        "title": "Formas de Pagamento",
+        "description": "Seus métodos de pagamento salvos são criptografados e armazenados com segurança pela Stripe.",
+        "addCard": {
+          "toast": "Essa demo não permite adicionar uma forma de pagamento",
+          "button": "Adicionar Cartão",
+          "title": "Adicionar cartão",
+          "description": "Adicione um cartão para comprar ingressos rapidamente ou pagar pelo Luma Plus. Suas informações são criptografadas e processadas com segurança pelo Stripe.",
+          "placeholder": "Número do Cartão"
+        }
+      },
+      "lumaPlus": {
+        "title": "Luma Plus",
+        "description": "Aproveite 0% de taxas da plataforma, limites maiores de convites e administração, suporte prioritário e mais.",
+        "learnMore": "Saiba mais",
+        "span": "Luma Plus se aplica ao nível do calendário. Escolha o calendário desejado acima para gerenciar sua assinatura do Luma Plus.",
+        "calendarSection": {
+          "noCalendars": {
+            "title": "Sem Calendários",
+            "subtitle": "Você não tem calendários. Para se inscrever no Luma Plus, primeiro ",
+            "subtitleLink": "crie um calendário"
+          }
+        }
+      },
+      "history": {
+        "title": "Histórico de Pagamentos",
+        "noPayments": {
+          "title": "Sem Pagamentos",
+          "subtitle": "Seus pagamentos aparecerão aqui. Para visualizar os pagamentos do Luma Plus, selecione o calendário correspondente na seção acima."
+        }
+      }
     }
   }
 }

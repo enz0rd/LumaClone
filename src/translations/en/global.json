@@ -246,6 +246,39 @@
           "discover": "Discover Events"
         }
       }
+    },
+    "payment": {
+      "methods": {
+        "title": "Payment Methods",
+        "description": "Add or remove payment methods to pay for event tickets and subscriptions.",
+        "addCard": {
+          "toast": "This demo does not support adding a payment method",
+          "button": "Add Card",
+          "title": "Add Card",
+          "description": "Add a card to quickly buy tickets or pay for Luma Plus. Your information is encrypted and securely processed by Stripe.",
+          "placeholder": "Card Number"
+        }
+      },
+      "lumaPlus": {
+        "title": "Luma Plus",
+        "description": "Enjoy 0% platform fees, higher invite and admin limits, priority support, and more.",
+        "learnMore": "Learn more",
+        "span": "Luma Plus applies on the calendar level. Choose the desired calendar above to manage its Luma Plus membership.",
+        "calendarSection": {
+          "noCalendars": {
+            "title": "No Calendars",
+            "subtitle": "You have no calendars. To sign up for Luma Plus, please first ",
+            "subtitleLink": "create a calendar"
+          }
+        }
+      },
+      "history": {
+        "title": "Payment History",
+        "noPayments": {
+          "title": "No Payments",
+          "subtitle": "Your payments will appear here. To view Luma Plus payments, select the corresponding calendar from the section above."
+        }
+      }
     }
   }
 }

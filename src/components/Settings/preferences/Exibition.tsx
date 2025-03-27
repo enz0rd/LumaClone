@@ -41,7 +41,7 @@ export function ExibitionSettings() {
       <span className="text-md text-zinc-800 dark:text-zinc-300">
       {t("Settings.preferences.exhibition.subtitle")}
       </span>
-      <div className="flex flex-wrap gap-2 mt-5">
+      <div className="flex gap-2 mt-5">
         <figure
           onClick={() => handleSwitchTheme("system")}
           className="w-fit rounded-lg overflow-hidden border border-zinc-400 dark:border-zinc-700 flex flex-col cursor-pointer group"

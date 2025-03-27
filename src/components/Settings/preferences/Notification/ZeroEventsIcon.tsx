@@ -6,7 +6,14 @@ export function ZeroEventsIcon({ className }: { className?: string }) {
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      setCurrentTheme(localStorage.getItem("theme") || "dark");
+      if(localStorage.getItem("theme") === "system") {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return setCurrentTheme("dark");
+        } else {
+          return setCurrentTheme("light");
+        }
+      }
+      return setCurrentTheme(localStorage.getItem("theme") || "dark");
     }
   }, []);
   
