@@ -1,45 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-
-const SearchCategories = [
-  "Featured",
-  "Previous Events",
-  "St. Patrick’s",
-  "Party",
-  "Food",
-  "Drinks",
-  "Sports",
-  "Crypto",
-  "Abstract",
-  "Tech",
-  "Wellness",
-  "Invites",
-  "Science",
-  "Jewish",
-  "Indian Fest",
-  "Wedding",
-  "Love",
-  "Birthday",
-  "Outdoors",
-  "Games",
-  "Women",
-  "Music",
-  "Family",
-  "Astronomy",
-  "Pride",
-  "On Stage",
-  "School",
-  "Football",
-  "Climate",
-  "Books",
-];
+import SearchCategories from "./SearchCategories";
+import FeaturedHub from "./FeaturedHub";
 
 export default function ImageSearch() {
-  const [selectedCategory, setSelectedCategory] = React.useState<number | null>(
-    null
-  );
+  const [category, setCategory] = React.useState<string>("Featured");
+
+  const handleChangeCategory = (category: string) => {
+    console.log("Selected category:", category);
+    setCategory(category);
+  };
+
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  useEffect(() => {
+    // Adiciona um listener para mudanças de largura da tela
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="w-full flex flex-col">
@@ -63,50 +45,12 @@ export default function ImageSearch() {
         p-2 focus-visible:outline-none"
         />
       </div>
-      {window.innerWidth < 768 ? (
-        <div className="flex flex-col gap-2 mt-2">
-          <ScrollArea className="my-2">
-            <div className="flex gap-2 overflow-x-hidden w-[15rem]">
-              {SearchCategories.map((category, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedCategory(index)}
-                  className={`flex-shrink-0 rounded-lg px-2 py-1 text-sm font-semibold cursor-pointer
-          ${
-            selectedCategory === index
-              ? "bg-zinc-800 dark:bg-zinc-200 text-zinc-50 dark:text-zinc-800"
-              : "text-zinc-700 dark:text-zinc-300"
-          }
-          hover:bg-zinc-800 hover:dark:bg-zinc-200 hover:text-zinc-50 hover:dark:text-zinc-800 transition duration-300 ease-in-out`}
-                >
-                  {category}
-                </div>
-              ))}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+      <div className={`${isMobile ? "flex-col" : "flex-row"} flex mt-4`}>
+        <SearchCategories onSelectCategory={handleChangeCategory} categoryInUse={category} />
+        <div className="flex flex-col rounded-lg w-full">
+          {category === "Featured" && <FeaturedHub setCategory={handleChangeCategory} actualEvent="st-patrick" />}
         </div>
-      ) : (
-        <div className="flex flex-col gap-2 mt-2">
-          <ScrollArea className="h-[20rem] w-fit pr-4 flex flex-col gap-2">
-            {SearchCategories.map((category, index) => (
-              <div
-                key={index}
-                onClick={() => setSelectedCategory(index)}
-                className={`flex rounded-lg px-2 py-1 text-sm font-semibold cursor-pointer
-                            ${
-                              selectedCategory === index
-                                ? "bg-zinc-800 dark:bg-zinc-200 text-zinc-50 dark:text-zinc-800"
-                                : "text-zinc-700 dark:text-zinc-300"
-                            }
-                            hover:bg-zinc-800 hover:dark:bg-zinc-200 hover:text-zinc-50 hover:dark:text-zinc-800 transition duration-300 ease-in-out`}
-              >
-                {category}
-              </div>
-            ))}
-          </ScrollArea>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

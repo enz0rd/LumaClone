@@ -47,9 +47,7 @@ export default function Page() {
       <Header isSignedIn={isSignedIn} />
       <main>
         {!isSignedIn ? (
-          <div className="fixed inset-0 z-[999] bg-[rgba(0,0,0,.5)] flex items-center justify-center">
-            <SignIn />
-          </div>
+          ""
         ) : (
           <div className="flex flex-row gap-2 justify-center w-full">
             <ImageSelection />

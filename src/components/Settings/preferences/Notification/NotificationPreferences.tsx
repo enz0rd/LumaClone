@@ -194,7 +194,7 @@ export function NotificationPreferences() {
       </div>
       <div className="flex flex-col gap-2 mt-4 mb-[5rem]">
         <span className="text-sm font-semibold text-zinc-500">
-        {t("Settings.preferences.notifications.yourSubsctiptions.title")}
+        {t("Settings.preferences.notifications.yourSubscriptions.title")}
         </span>
         <div className="flex flex-col">
           {Subscriptions.map((content, index) => (

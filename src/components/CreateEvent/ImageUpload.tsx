@@ -46,10 +46,10 @@ export default function ImageUpload({ onSetImage } : ImageUploadProps) {
     <>
         <label htmlFor="event-image">
             <div className="flex flex-col items-center justify-center p-6 bg-zinc-800/80 rounded-lg">
-            <h1 className="text-md text-wrap font-medium text-zinc-50">
+            <h1 className="text-md text-center text-wrap font-medium text-zinc-50">
                 Drag & drop or click here to upload
             </h1>
-            <p className="text-xs text-wrap font-medium text-zinc-400">
+            <p className="text-xs text-center text-wrap font-medium text-zinc-400">
                 Or choose an image below. The ideal aspect ratio is 1:1.
             </p>
             <input 
