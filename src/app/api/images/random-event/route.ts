@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function GET() {
     try {
-        const response = await axios.get(`https://api.unsplash.com/photos/random?query=event%20invite&orientation=squarish&client_id=${process.env.UNSPLASH_ACCESS_KEY}`);
+        const response = await axios.get(`https://api.unsplash.com/photos/random?query=event%20invite%20minimalist&orientation=squarish&client_id=${process.env.UNSPLASH_ACCESS_KEY}`);
         
         const dataJson = response.data;
         const result = dataJson.urls.small;

@@ -1,12 +1,143 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import { ActualEvents } from "./ActualEvents";
 import { motion } from "framer-motion";
+import EventCategoryCell from "./EventCategoryCell";
 
 interface FeaturedHubProps {
   actualEvent: "st-patrick" | "easter" | "halloween" | "christmas";
   setCategory: (category: string) => void;
 }
+
+const categories = [
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Previous Events",
+  description: "Previous Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "St. Patrick's",
+  description: "St. Patrick's Day",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Party",
+  description: "Party Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Food",
+  description: "Food Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Drinks",
+  description: "Drink Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Sports",
+  description: "Sports Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Crypto",
+  description: "Crypto Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Abstract",
+  description: "Abstract Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Tech",
+  description: "Tech Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Wellness",
+  description: "Wellness Events",
+}, 
+  {
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Invites",
+  description: "Invite Events",
+},
+{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Science",
+  description: "Science Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Jewish",
+  description: "Jewish Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Indian Fest",
+  description: "Indian Fest Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Wedding",
+  description: "Wedding Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Love",
+  description: "Love Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Birthday",
+  description: "Birthday Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Outdoors",
+  description: "Outdoors Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Games",
+  description: "Games Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Women",
+  description: "Women Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Music",
+  description: "Music Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Family",
+  description: "Family Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Astronomy",
+  description: "Astronomy Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Pride",
+  description: "Pride Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "On Stage",
+  description: "On Stage Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "School",
+  description: "School Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Football",
+  description: "Football Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Climate",
+  description: "Climate Events",
+},{
+  image: ["st-patrick", "easter", "halloween", "christmas"],
+  title: "Books",
+  description: "Books Events",
+}];
 
 export default function FeaturedHub({
   actualEvent,
@@ -14,10 +145,20 @@ export default function FeaturedHub({
 }: FeaturedHubProps) {
   const event = ActualEvents[actualEvent];
 
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const images = [
     {
       x: -50,
-      y: 50,
+      y: isMobile ? 120 : 50,
       rotate: 10,
       animation: {
         rotation: 0,
@@ -29,7 +170,7 @@ export default function FeaturedHub({
     },
     {
       x: 10,
-      y: -70,
+      y: isMobile ? 30 : -70,
       rotate: 15,
       animation: {
         rotation: 2,
@@ -40,8 +181,8 @@ export default function FeaturedHub({
       zIndex: "z-[7]",
     },
     {
-      x: -150,
-      y: -260,
+      x: isMobile ? -120 : -150,
+      y: isMobile ? -100 : -260,
       rotate: -5,
       animation: {
         rotation: -5,
@@ -52,8 +193,8 @@ export default function FeaturedHub({
       zIndex: "z-[9]",
     },
     {
-      x: -220,
-      y: -390,
+      x: isMobile ? -180 : -220,
+      y: isMobile ? -180 : -390,
       rotate: -20,
       animation: {
         rotation: -5,
@@ -65,8 +206,10 @@ export default function FeaturedHub({
     },
   ];
 
+
+
   return (
-    <ScrollArea className="w-full border h-full border-zinc-50 overflow-hidden rounded-lg">
+    <ScrollArea className="w-full h-full overflow-hidden rounded-lg">
       <motion.button
         whileHover="hover"
         onClick={() => setCategory(event.title)}
@@ -95,12 +238,16 @@ export default function FeaturedHub({
                 },
               }}
               transition={{ type: "spring", stiffness: 150 }}
-              className={`rounded-lg w-[10rem] h-[10rem] drop-shadow-[0_20px_15px_rgba(0,0,0,0.6)] shadow-zinc-900 ${item.zIndex} ${item.bg}`}
+              className={`rounded-lg ${isMobile ? "size-[7rem]" : "size-[10rem]"} drop-shadow-[0_20px_15px_rgba(0,0,0,0.6)] shadow-zinc-900 ${item.zIndex} ${item.bg}`}
             />
           ))}
         </div>
       </motion.button>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-4"></div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4">
+          {categories.map((category, index) => (
+            <EventCategoryCell key={index} category={category} changeCategory={setCategory}/>
+          ))}
+      </div>
     </ScrollArea>
   );
 }

@@ -11,18 +11,28 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Search, X } from "lucide-react";
-import ImageSearch from "./ImageSearch";
 import ImageUpload, { SetImageReturn } from "./ImageUpload";
 import toast, { Toaster } from "react-hot-toast";
 import { ToastTypes } from "../ToastTypes";
 import SearchCategories from "./SearchCategories";
 import FeaturedHub from "./FeaturedHub";
+import { ScrollArea } from "../ui/scroll-area";
+import { extractColors } from "extract-colors";
 
-export default function ImageSelection() {
-  const handleSetImage = (object: SetImageReturn) => {
+interface ImageSelectionProps {
+  returnImageColors: (imageColors: string) => void;
+}
+
+
+export default function ImageSelection({ returnImageColors }: ImageSelectionProps) {
+  const handleSetImage = async (object: SetImageReturn) => {
     if (object.type === "image" && object.file) {
       const previewUrl = URL.createObjectURL(object.file);
       console.log("Preview URL gerada:", previewUrl);
+
+      const colors = await extractColors(previewUrl)
+      const predominantColor = colors.reduce((max, color) => color.area > max.area ? color : max, colors[0]);
+      returnImageColors(predominantColor.hex)
 
       onSetImage((prev) => ({
         ...prev,
@@ -73,10 +83,10 @@ export default function ImageSelection() {
   return (
     <>
       <Toaster />
-      <AlertDialog open={true} onOpenChange={setIsOpen}>
+      <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogTrigger asChild onClick={() => setIsOpen(true)}>
           <div className="flex flex-col w-fit group hover:cursor-pointer">
-            <ImageDisplay imageSet={imageSet} />
+            <ImageDisplay imageSet={imageSet} imageLoad={returnImageColors} />
             <div
               className="bg-zinc-50 rounded-full w-8 h-8 mt-[-3rem] border-2 
             border-zinc-800 mr-3 flex items-center self-end justify-center
@@ -89,8 +99,11 @@ export default function ImageSelection() {
             </div>
           </div>
         </AlertDialogTrigger>
-        <AlertDialogContent className="rounded-2xl flex flex-col w-[90%] max-w-[50rem] max-h-[45rem] h-[90%] min-h-[20rem] p-5 backdrop:blur-3xl bg-zinc-900/80 border-2 border-zinc-800 shadow-lg shadow-black/20">
-          <AlertDialogHeader className="flex flex-row items-center h-fit border-zinc-50 space-y-0">
+        <AlertDialogContent
+          className="rounded-2xl grid grid-cols-1 md:grid-cols-3 w-[90%] max-w-[50rem] max-h-[45rem] h-[90%] min-h-[20rem] 
+        p-5 backdrop-blur-md dark:bg-zinc-900/80 bg-zinc-100/80 dark:border-zinc-800 border-zinc-200 shadow-lg shadow-black/20"
+        >
+          <AlertDialogHeader className="flex flex-row items-center h-fit border-zinc-50 space-y-0 col-span-1 md:col-span-3">
             <AlertDialogTitle className="w-full text-center">
               Choose Image
             </AlertDialogTitle>
@@ -104,20 +117,19 @@ export default function ImageSelection() {
               />
             </AlertDialogCancel>
           </AlertDialogHeader>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="col-span-1 md:col-span-3 w-full h-full gap-2">
             <ImageUpload onSetImage={handleSetImage} />
-            <div className="border-zinc-50 border h-full overflow-hidden">
-              {/* <ImageSearch /> */}
+            <div className="h-full overflow-hidden">
               <div className="w-full flex flex-col">
                 <div
-                  className="flex flex-row items-center justify-between bg-zinc-200 dark:bg-zinc-900/80 rounded-lg p-2 border-2 border-zinc-800
-          group hover:dark:border-zinc-200 hover:border-zinc-600 focus-within:dark:border-zinc-200 group-focus-within:border-zinc-600
-          transition 1.5s ease-in-out gap-2 px-3 py-0"
+                  className="flex flex-row items-center justify-between bg-zinc-200 dark:bg-zinc-900/80 rounded-lg p-2 border-2 mt-4 border-zinc-100 dark:border-zinc-800
+                  group hover:dark:border-zinc-200 hover:border-zinc-600 focus-within:dark:border-zinc-200 group-focus-within:border-zinc-600
+                  transition 1.5s ease-in-out gap-2 px-3 py-0"
                 >
                   <Search
                     className="text-zinc-300 dark:text-zinc-600 
-          group-hover:dark:text-zinc-50 group-hover:text-zinc-600 
-          group-focus-within:dark:text-zinc-50 group-focus-within:text-zinc-600"
+                    group-hover:dark:text-zinc-50 group-hover:text-zinc-600 
+                    group-focus-within:dark:text-zinc-50 group-focus-within:text-zinc-600"
                     size={20}
                   />
 
@@ -125,26 +137,27 @@ export default function ImageSelection() {
                     type="search"
                     placeholder="Search for more photos"
                     className="text-sm focus-visible:border-none 
-          bg-zinc-900 border-none text-zinc-700 dark:text-zinc-300 w-full 
-          p-2 focus-visible:outline-none"
+                    dark:bg-zinc-900 bg-zinc-200 border-none text-zinc-700 dark:text-zinc-300 w-full 
+                    p-2 focus-visible:outline-none"
                   />
                 </div>
               </div>
             </div>
-            <div className="overflow-auto">
-              <SearchCategories
-                onSelectCategory={handleChangeCategory}
-                categoryInUse={category}
+          </div>
+
+          <ScrollArea className="overflow-auto md:col-span-1 sm:col-span-3 row-span-4">
+            <SearchCategories
+              onSelectCategory={handleChangeCategory}
+              categoryInUse={category}
+            />
+          </ScrollArea>
+          <div className="overflow-auto sm:col-span-2 row-span-4 rounded-lg w-full">
+            {category === "Featured" && (
+              <FeaturedHub
+                setCategory={handleChangeCategory}
+                actualEvent="st-patrick"
               />
-            </div>
-            <div className="flex flex-col rounded-lg w-full">
-              {category === "Featured" && (
-                <FeaturedHub
-                  setCategory={handleChangeCategory}
-                  actualEvent="st-patrick"
-                />
-              )}
-            </div>
+            )}
           </div>
         </AlertDialogContent>
       </AlertDialog>

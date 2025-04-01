@@ -41,16 +41,23 @@ export default function Page() {
     validateToken();
   }, [hasChecked, router]); // Coloque `router` na dependência para evitar possíveis problemas
 
+  const [colors, setColors] = useState<string>("#212121");
+
   return (
     <>
-      <RandomBg />
+        <div className="z-[-1] fixed top-0 left-0 right-0 bottom-0">
+            <div 
+                className="w-full h-full" 
+                style={{ opacity: 0.1, backgroundColor: colors }}
+            />
+        </div>
       <Header isSignedIn={isSignedIn} />
       <main>
         {!isSignedIn ? (
           ""
         ) : (
           <div className="flex flex-row gap-2 justify-center w-full">
-            <ImageSelection />
+            <ImageSelection returnImageColors={setColors} />
           </div>
         )}
       </main>
