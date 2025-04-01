@@ -40,7 +40,11 @@ export default function ImageDisplay({
     const eventImage: ImageDetails | null = JSON.parse(
       localStorage.getItem("event-image") || "null"
     );
-    if (eventImage) {
+
+    console.log("event image origin: " + eventImage?.image);
+    console.log("origin url: " + window.location.origin)
+
+    if (eventImage && eventImage.image && !eventImage.image.includes(window.location.origin)) {
       setImageDetails(eventImage);
       const colors = await extractColors(eventImage.image!);
       const predominantColor = colors.reduce(
@@ -83,7 +87,7 @@ export default function ImageDisplay({
   return (
     <div>
       {imageDetails && (
-        <EzTooltip content={`${imageDetails.credits} | ${imageDetails.from}`}>
+        <EzTooltip className="z-[10]" content={`${imageDetails.credits} | ${imageDetails.from}`}>
           <BsInfoCircleFill
             className="text-zinc-800 mb-[-2rem] ml-[.7rem] z-[10] group-hover:text-zinc-200 rounded-md transition 1.5s ease-in-out group-hover:visible invisible"
             size={20}
