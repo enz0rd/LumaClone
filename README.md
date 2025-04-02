@@ -6,8 +6,7 @@
 > **Attention:**  
 > This project is only for educational purposes. There are no commercial plans or any type of subscription.
 
-Hello! Welcome to this beautiful project. I'm developing it using:
-- Bun 
+Hello! Welcome to this beautiful project. I'm developing it using: 
 - Next.js
 - React.js
 - Zod
@@ -23,7 +22,7 @@ git clone "https://github.com/enz0rd/lumaclone.git"
 ```
 Then, once inside the project's folder, install the dependencies:
 ```bash
-bun install --force
+npm install --force
 ```
 After this, you need to set up your environment:
 - Create a .env file on the root of the project
@@ -44,11 +43,11 @@ CLOUDINARY_API_SECRET="*cloudinary api secret*"
 ```
 Migrate the database using prisma:
 ```bash
-bun prisma migrate dev --name init
+npm prisma migrate dev --name init
 ```
 Finally, run the project using:
 ```bash
-bun run dev
+npm run dev
 ```
 ### You're ready to roll! 
 If you have any questions, please reach out to [my email](mailto:enzorossidaltoe@hotmail.com.br)

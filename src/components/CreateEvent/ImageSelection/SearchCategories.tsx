@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
 import { X } from "lucide-react";
 
 const categories = [

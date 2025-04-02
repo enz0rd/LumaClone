@@ -2,7 +2,7 @@ import Image from "next/image";
 import { RefreshCcw, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { BsInfoCircleFill } from "react-icons/bs";
-import { EzTooltip } from "../EzTooltip";
+import { EzTooltip } from "../../EzTooltip";
 import { api } from "@/lib/utils";
 import { extractColors } from "extract-colors";
 
@@ -40,7 +40,11 @@ export default function ImageDisplay({
     const eventImage: ImageDetails | null = JSON.parse(
       localStorage.getItem("event-image") || "null"
     );
-    if (eventImage) {
+
+    console.log("event image origin: " + eventImage?.image);
+    console.log("origin url: " + window.location.origin)
+
+    if (eventImage && eventImage.image && !eventImage.image.includes(window.location.origin)) {
       setImageDetails(eventImage);
       const colors = await extractColors(eventImage.image!);
       const predominantColor = colors.reduce(
@@ -83,7 +87,7 @@ export default function ImageDisplay({
   return (
     <div>
       {imageDetails && (
-        <EzTooltip content={`${imageDetails.credits} | ${imageDetails.from}`}>
+        <EzTooltip className="z-[10]" content={`${imageDetails.credits} | ${imageDetails.from}`}>
           <BsInfoCircleFill
             className="text-zinc-800 mb-[-2rem] ml-[.7rem] z-[10] group-hover:text-zinc-200 rounded-md transition 1.5s ease-in-out group-hover:visible invisible"
             size={20}
@@ -94,9 +98,9 @@ export default function ImageDisplay({
         <Image
           src={imageDetails?.image || ""}
           alt={imageDetails?.alt || ""}
-          width={250}
-          height={250}
-          className="rounded-lg border-2 group-hover:opacity-70 transition aspect-square object-cover 1.5s ease-in-out"
+          width={300}
+          height={300}
+          className="rounded-xl border-2 group-hover:opacity-70 transition aspect-square object-cover 1.5s ease-in-out"
         />
       ) : isImageSet === "error" ? (
         <div className="rounded-lg border-2 flex items-center justify-center group-hover:brightness-80 w-[250px] h-[250px] transition 1.5s ease-in-out">

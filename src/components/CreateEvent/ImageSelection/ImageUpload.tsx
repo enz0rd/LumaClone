@@ -1,6 +1,6 @@
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { ToastTypes } from "../ToastTypes";
+import { ToastTypes } from "../../ToastTypes";
 
 export interface SetImageReturn {
     type?: string;

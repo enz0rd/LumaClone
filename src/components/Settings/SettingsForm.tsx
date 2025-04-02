@@ -48,7 +48,7 @@ export function SettingsForm() {
 
   return (
     <div className="flex flex-col justify-center gap-5 mt-[3rem]">
-      <Tabs defaultValue={"payment"} className="w-full">
+      <Tabs defaultValue={activeTab} className="w-full">
         <div className={`sticky top-0 z-10 backdrop-blur-sm ${isSticky ? "dark:bg-zinc-900/45 bg-zinc-50/45" : ""}`}>
           <div className="container mx-auto lg:max-w-[1000px] mb-3 flex gap-5 px-3 md:px-1 lg:px-0">
             <h1 className={`dark:text-zinc-50 text-zinc-900 font-semibold ${isSticky ? "text-xl mt-2" : "text-3xl"}`}>

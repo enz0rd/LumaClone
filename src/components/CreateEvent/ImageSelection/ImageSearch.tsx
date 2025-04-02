@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { Search } from "lucide-react";
 import SearchCategories from "./SearchCategories";
 import FeaturedHub from "./FeaturedHub";

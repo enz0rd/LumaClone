@@ -1,6 +1,7 @@
 "use client";
 import { RandomBg } from "@/components/Background/RandomBg";
-import ImageSelection from "@/components/CreateEvent/ImageSelection";
+import EventForm from "@/components/CreateEvent/EventForm/EventForm";
+import ImageSelection from "@/components/CreateEvent/ImageSelection/ImageSelection";
 import { Header } from "@/components/Header";
 import { SignIn } from "@/components/SignIn/SignIn";
 import { Welcome } from "@/components/Welcome/Welcome";
@@ -58,6 +59,7 @@ export default function Page() {
         ) : (
           <div className="flex flex-row gap-2 justify-center w-full">
             <ImageSelection returnImageColors={setColors} />
+            <EventForm />
           </div>
         )}
       </main>

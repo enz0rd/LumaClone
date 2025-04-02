@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "../../ui/scroll-area";
 import { ActualEvents } from "./ActualEvents";
 import { motion } from "framer-motion";
 import EventCategoryCell from "./EventCategoryCell";
