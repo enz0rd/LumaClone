@@ -10,29 +10,33 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { Search, X } from "lucide-react";
+import { Loader2, Search, X } from "lucide-react";
 import ImageUpload, { SetImageReturn } from "./ImageUpload";
 import toast, { Toaster } from "react-hot-toast";
 import { ToastTypes } from "../ToastTypes";
 import SearchCategories from "./SearchCategories";
 import FeaturedHub from "./FeaturedHub";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { extractColors } from "extract-colors";
 
 interface ImageSelectionProps {
   returnImageColors: (imageColors: string) => void;
 }
 
-
-export default function ImageSelection({ returnImageColors }: ImageSelectionProps) {
+export default function ImageSelection({
+  returnImageColors,
+}: ImageSelectionProps) {
   const handleSetImage = async (object: SetImageReturn) => {
     if (object.type === "image" && object.file) {
       const previewUrl = URL.createObjectURL(object.file);
       console.log("Preview URL gerada:", previewUrl);
 
-      const colors = await extractColors(previewUrl)
-      const predominantColor = colors.reduce((max, color) => color.area > max.area ? color : max, colors[0]);
-      returnImageColors(predominantColor.hex)
+      const colors = await extractColors(previewUrl);
+      const predominantColor = colors.reduce(
+        (max, color) => (color.area > max.area ? color : max),
+        colors[0]
+      );
+      returnImageColors(predominantColor.hex);
 
       onSetImage((prev) => ({
         ...prev,
@@ -63,9 +67,18 @@ export default function ImageSelection({ returnImageColors }: ImageSelectionProp
   });
 
   const [category, setCategory] = React.useState<string>("Featured");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChangeCategory = (category: string) => {
     console.log("Selected category:", category);
+    if(category !== "Featured") {
+      // implementar função de get de imagens por categoria
+      // Exemplo de simulação de carregamento
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
     setCategory(category);
   };
 
@@ -100,10 +113,10 @@ export default function ImageSelection({ returnImageColors }: ImageSelectionProp
           </div>
         </AlertDialogTrigger>
         <AlertDialogContent
-          className="rounded-2xl grid grid-cols-1 md:grid-cols-3 w-[90%] max-w-[50rem] max-h-[45rem] h-[90%] min-h-[20rem] 
-        p-5 backdrop-blur-md dark:bg-zinc-900/80 bg-zinc-100/80 dark:border-zinc-800 border-zinc-200 shadow-lg shadow-black/20"
+          className={`rounded-2xl grid grid-cols-1 ${isMobile ? " " : "md:grid-cols-3"}  w-[90%] max-w-[50rem] max-h-[45rem] h-[90%] min-h-[20rem] 
+        p-5 backdrop-blur-md dark:bg-zinc-900/80 bg-zinc-100/80 dark:border-zinc-800 border-zinc-200 shadow-lg shadow-black/20`}
         >
-          <AlertDialogHeader className="flex flex-row items-center h-fit border-zinc-50 space-y-0 col-span-1 md:col-span-3">
+          <AlertDialogHeader className={`flex flex-row items-center h-fit border-zinc-50 space-y-0 col-span-1 ${isMobile ? " " : "md:col-span-3"}`}>
             <AlertDialogTitle className="w-full text-center">
               Choose Image
             </AlertDialogTitle>
@@ -117,7 +130,7 @@ export default function ImageSelection({ returnImageColors }: ImageSelectionProp
               />
             </AlertDialogCancel>
           </AlertDialogHeader>
-          <div className="col-span-1 md:col-span-3 w-full h-full gap-2">
+          <div className="row-start-2 col-span-1 md:col-span-3 w-full h-full gap-2">
             <ImageUpload onSetImage={handleSetImage} />
             <div className="h-full overflow-hidden">
               <div className="w-full flex flex-col">
@@ -152,11 +165,29 @@ export default function ImageSelection({ returnImageColors }: ImageSelectionProp
             />
           </ScrollArea>
           <div className="overflow-auto sm:col-span-2 row-span-4 rounded-lg w-full">
-            {category === "Featured" && (
+            {category === "Featured" ? (
               <FeaturedHub
                 setCategory={handleChangeCategory}
                 actualEvent="st-patrick"
               />
+            ) : (
+              isLoading ? (
+                <div className="flex items-center justify-center w-full h-full">
+                  <Loader2 className="animate-spin text-zinc-500" />
+                </div>
+              ) : (
+                <ScrollArea className="w-full h-full rounded-lg">
+                  <div className="flex flex-row flex-wrap gap-0">
+                    {Array.from({ length: 30 }, (_, index) => (
+                      <div
+                        className={`col-span-1 border-[.1rem] border-zinc-200 dark:border-zinc-800 size-[50%] sm:size-[33%] md:size-[25%] aspect-square bg-zinc-500`}
+                        key={index}
+                      />
+                    ))}
+                  </div>
+                  <ScrollBar orientation="vertical" />
+                </ScrollArea>
+                )
             )}
           </div>
         </AlertDialogContent>
